@@ -1,5 +1,5 @@
 /*
-    ISFLibrary.swift
+    typeToBytes.swift
 
     Copyright (c) 2016 Stephen Whittle  All rights reserved.
 
@@ -19,35 +19,6 @@
     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
     IN THE SOFTWARE.
 */
-
-/// define what a Byte is.
-public typealias Byte = UInt8
-
-/// Clamp a value between an lower and upper boundary.
-///
-/// - Parameters:
-///   - value: The value to be clamped.
-///   - lower: The lower boundry.
-///   - upper: The upper boundary.
-///
-/// - Returns: The clamped value.
-public func clamp<T: Comparable>(value: T, lower: T, upper: T) -> T {
-    return min(max(value, lower), upper)
-}
-
-/// Convert a byte array to a type
-///
-/// - Parameters:
-///   - value: The byte array to convert
-///
-/// - Returns: the result as type.
-public func bytesToType<T>(_ value: [Byte], _: T.Type) -> T {
-    return value.withUnsafeBufferPointer {                                                    // -> get pointer to byte array (UnsafeBufferPointer<[Byte]>)
-        $0.baseAddress!.withMemoryRebound(to: T.self, capacity: MemoryLayout<Byte>.size) {    // -> access its base address
-            $0.pointee                                                                        // -> rebind memory to target type T (UnsafeMutablePointer<T>)
-        }                                                                                     // -> extract and return the value of target type
-    }
-}
 
 /// Convert a type to  byte array.
 ///
