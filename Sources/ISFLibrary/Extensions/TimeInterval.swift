@@ -25,7 +25,7 @@ import Foundation
 let millisecondsPerSecond: Double = 1000
 let microsecondsPerSecond: Double = millisecondsPerSecond * 1000
 
-extension TimeInterval {
+public extension TimeInterval {
     public init(seconds: Int) {
         self = Double(seconds)
     }
@@ -35,7 +35,7 @@ extension TimeInterval {
     }
 }
 
-extension TimeInterval {
+public extension TimeInterval {
     public init(milliseconds: Int) {
         self = Double(milliseconds) / millisecondsPerSecond
     }
@@ -45,7 +45,7 @@ extension TimeInterval {
     }
 }
 
-extension TimeInterval {
+public extension TimeInterval {
     public init(microseconds: CUnsignedInt) {
         self = Double(microseconds) / microsecondsPerSecond
     }
