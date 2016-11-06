@@ -72,16 +72,9 @@ public struct LinkedListCOW<T: Equatable> {
         self.mutableStorage.remove(atIndex: index)
     }
 }
-/*
+
 extension LinkedListCOW: CustomStringConvertible {
     public var description: String {
-//        let address = unsafeAddress(of: self.storage)
-
-        let address = withUnsafePointer(to: &self.storage) {
-            $0.withMemoryRebound(to: LinkedListCOW.self, capacity: 1)
-        }
-
-        return "LinkedListCOW(storage: \(address))"
+        return "LinkedListCOW(storage: \(self.storage))"
     }
 }
-*/

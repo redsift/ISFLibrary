@@ -160,12 +160,12 @@ extension LinkedList: Sequence {
 
 extension LinkedList {
     func copy() -> LinkedList<T> {
-        let newList = LinkedList<T>()
+        let newLinkedList = LinkedList<T>()
 
         for element in self {
-            newList.append(value: element.value)
+            newLinkedList.append(value: element.value)
         }
 
-        return newList
+        return newLinkedList
     }
 }
