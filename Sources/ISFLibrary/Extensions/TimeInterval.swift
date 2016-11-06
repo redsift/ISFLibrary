@@ -33,6 +33,10 @@ public extension TimeInterval {
     public init(seconds: Double) {
         self = seconds
     }
+
+    public var asSeconds: Int {
+        return Int(floor(self))
+    }
 }
 
 public extension TimeInterval {
