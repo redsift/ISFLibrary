@@ -22,15 +22,36 @@
 
 import Foundation
 
-let millisecondsPerSecond: Double = 1000
-let microsecondsPerSecond: Double = millisecondsPerSecond * 1000
+public let secondsPerMinute:      TimeInterval = 60
+public let secondsPerHour:        TimeInterval = secondsPerMinute * 60
+public let secondsPerDay:         TimeInterval = secondsPerHour * 24
+public let millisecondsPerSecond: TimeInterval = 1000
+public let microsecondsPerSecond: TimeInterval = millisecondsPerSecond * 1000
+
+public extension TimeInterval {
+    public init(days: Int) {
+        self = Double(days) * secondsPerDay
+    }
+}
+
+public extension TimeInterval {
+    public init(hours: Int) {
+        self = Double(hours) * secondsPerHour
+    }
+}
+
+public extension TimeInterval {
+    public init(minutes: Int) {
+        self = Double(minutes) * secondsPerMinute
+    }
+}
 
 public extension TimeInterval {
     public init(seconds: Int) {
         self = Double(seconds)
     }
 
-    public init(seconds: Double) {
+    public init(seconds: TimeInterval) {
         self = seconds
     }
 
