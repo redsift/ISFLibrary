@@ -1,13 +1,13 @@
 import Glibc
 
-public struct StderrOutputStream: TextOutputStream {
+public struct StdoutOutputStream: TextOutputStream {
     public mutating func write(_ string: String) {
         let ascii = string.unicodeScalars.lazy.map {
             ($0 == "\n") ? "\n" : $0.escaped(asASCII: true)
         }
 
-        fputs(ascii.joined(separator: ""), stderr)
+        fputs(ascii.joined(separator: ""), stdout)
     }
 }
 
-public var errorStream = StderrOutputStream()
+public var outputStream = StdoutOutputStream()
