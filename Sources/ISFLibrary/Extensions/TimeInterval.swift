@@ -55,11 +55,6 @@ public extension TimeInterval {
         self = seconds
     }
 
-    @available(*, renamed: "seconds")
-    public var asSeconds: Int {
-        return Int(floor(self))
-    }
-
     public var seconds: Int {
         return Int(floor(self))
     }
@@ -70,11 +65,6 @@ public extension TimeInterval {
         self = Double(milliseconds) / millisecondsPerSecond
     }
 
-    @available(*, renamed: "milliseconds")
-    public var asMilliseconds: Int {
-        return Int(self * millisecondsPerSecond)
-    }
-
     public var milliseconds: Int {
         return Int(self * millisecondsPerSecond)
     }
@@ -83,11 +73,6 @@ public extension TimeInterval {
 public extension TimeInterval {
     public init(microseconds: CUnsignedInt) {
         self = Double(microseconds) / microsecondsPerSecond
-    }
-
-    @available(*, renamed: "microseconds")
-    public var asMicroseconds: CUnsignedInt {
-        return CUnsignedInt(self * microsecondsPerSecond)
     }
 
     public var microseconds: CUnsignedInt {
