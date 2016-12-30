@@ -1,6 +1,9 @@
 import XCTest
+
 @testable import ISFLibraryTests
 
-XCTMain([
-     testCase(ISFLibraryTests.allTests),
-])
+var tests = [XCTestCaseEntry]()
+
+tests += ISFLibraryTests.allTests
+
+XCTMain(tests)
