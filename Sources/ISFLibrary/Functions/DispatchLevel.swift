@@ -29,7 +29,7 @@ public enum DispatchLevel {
     case utility
     case background
 
-    var dispatchQueue: DispatchQueue {
+    public var dispatchQueue: DispatchQueue {
         switch self {
             case .main:
                 return DispatchQueue.main
@@ -41,6 +41,23 @@ public enum DispatchLevel {
                 return DispatchQueue.global(qos: .utility)
             case .background:
                 return DispatchQueue.global(qos: .background)
+        }
+    }
+}
+
+extension DispatchLevel: CustomStringConvertible {
+    public var description: String {
+        switch self {
+            case .main:
+                return "main"
+            case .userInteractive:
+                return "user-interactive"
+            case .userInitiated:
+                return "user-initiated"
+            case .utility:
+                return "utility"
+            case .background:
+                return "background"
         }
     }
 }

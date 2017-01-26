@@ -41,6 +41,19 @@ extension CompareResult: CustomStringConvertible {
     public var description: String {
         switch self {
             case .LessThan:
+                return "less-than"
+            case .Equal:
+                return "equal"
+            case .GreaterThan:
+                return "greater-than"
+        }
+    }
+}
+
+extension CompareResult: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+            case .LessThan:
                 return "<"
             case .Equal:
                 return "=="
