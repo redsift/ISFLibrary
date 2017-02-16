@@ -26,8 +26,8 @@ public final class LinkedList<T: Equatable> {
     fileprivate var start: NodeType? {
         didSet {
             // special case for a 1 element list
-            if (self.end == nil) {
-                self.end = self.start
+            if (end == nil) {
+                end = start
             }
         }
     }
@@ -35,8 +35,8 @@ public final class LinkedList<T: Equatable> {
     fileprivate var end: NodeType? {
         didSet {
             // special case for a 1 element list
-            if (self.start == nil) {
-                self.start = self.end
+            if (start == nil) {
+                start = end
             }
         }
     }
@@ -46,7 +46,7 @@ public final class LinkedList<T: Equatable> {
 
     /// wether or not the list is empty
     public var isEmpty: Bool {
-        return (self.count == 0)
+        return (count == 0)
     }
 
     /// create a new LinkedList
@@ -55,33 +55,36 @@ public final class LinkedList<T: Equatable> {
     /// create a new LinkedList with a sequence
     public init<S: Sequence>(_ elements: S) where S.Iterator.Element == T {
         for element in elements {
-            self.append(value: element)
+            append(value: element)
         }
     }
 }
 
 extension LinkedList {
     public func append(value: T) {
-        let previousEnd = self.end
-        self.end = NodeType(value: value)
+        let previousEnd = end
 
-        self.end?.previous = previousEnd
-        previousEnd?.next = self.end
+        end = NodeType(value: value)
 
-        self.count += 1
+        end?.previous = previousEnd
+        previousEnd?.next = end
+
+        count += 1
     }
 }
 
 extension LinkedList {
     fileprivate func iterate(block: (NodeType, Int) throws -> NodeType?) rethrows -> NodeType? {
-        var node = self.start
+        var node = start
         var index = 0
 
         while (node != nil) {
             let result = try block(node!, index)
-            if result != nil {
+
+            if (result != nil) {
                 return result
             }
+
             index += 1
             node = node?.next
         }
@@ -92,9 +95,9 @@ extension LinkedList {
 
 extension LinkedList {
     public func nodeAt(index: Int) -> NodeType {
-        precondition(index >= 0 && index < self.count, "Index \(index) out of bounds")
+        precondition(index >= 0 && index < count, "Index \(index) out of bounds")
 
-        let result = self.iterate {
+        let result = iterate {
             if ($1 == index) {
                 return $0
             }
@@ -106,9 +109,7 @@ extension LinkedList {
     }
 
     public func valueAt(index: Int) -> T {
-        let node = self.nodeAt(index: index)
-
-        return node.value
+        return nodeAt(index: index).value
     }
 }
 
@@ -117,28 +118,27 @@ extension LinkedList {
         let nextNode = node.next
         let previousNode = node.previous
 
-        if (node === self.start && node === self.end) {
-            self.start = nil
-            self.end = nil
-        } else if (node === self.start) {
-            self.start = node.next
-        } else if (node === self.end) {
-            self.end = node.previous
+        if (node === start && node === end) {
+            start = nil
+            end = nil
+        } else if (node === start) {
+            start = node.next
+        } else if (node === end) {
+            end = node.previous
         } else {
             previousNode?.next = nextNode
             nextNode?.previous = previousNode
         }
 
-        self.count -= 1
+        count -= 1
 
-        assert((self.end != nil && self.start != nil && self.count > 1) ||
-               (self.end == nil && self.start == nil && self.count == 0), "Internal invariant not upheld at the end of remove")
+        assert((end != nil && start != nil && count > 1) || (end == nil && start == nil && count == 0), "Internal invariant not upheld at the end of remove")
     }
 
     public func remove(atIndex index: Int) {
-        precondition(index >= 0 && index < self.count, "Index \(index) out of bounds")
+        precondition(index >= 0 && index < count, "Index \(index) out of bounds")
 
-        let result = self.iterate {
+        let result = iterate {
             if ($1 == index) {
                 return $0
             }
@@ -146,7 +146,7 @@ extension LinkedList {
             return nil
         }
 
-        self.remove(node: result!)
+        remove(node: result!)
     }
 }
 

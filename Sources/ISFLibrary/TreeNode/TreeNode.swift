@@ -27,15 +27,15 @@ public class TreeNode<T> {
     public var children = [TreeNode<T>]()
 
     public var isRoot: Bool {
-        return (self.parent == nil) ? true : false
+        return (parent == nil) ? true : false
     }
 
     public var isLeaf: Bool {
-        return (self.children.isEmpty)
+        return (children.isEmpty)
     }
 
     public var isNode: Bool {
-        return (!self.isRoot && !self.isLeaf)
+        return (!isRoot && !isLeaf)
     }
 
     public init(value: T) {
@@ -43,7 +43,7 @@ public class TreeNode<T> {
     }
 
     public func addChild(node: TreeNode<T>) {
-        self.children.append(node)
+        children.append(node)
         node.parent = self
     }
 }
@@ -54,7 +54,7 @@ extension TreeNode where T: Equatable {
             return self
         }
 
-        for child in self.children {
+        for child in children {
             if let found = child.search(for: value) {
                 return found
             }
@@ -66,10 +66,10 @@ extension TreeNode where T: Equatable {
 
 extension TreeNode: CustomStringConvertible {
     public var description: String {
-        var description = "\(self.value)"
+        var description = "\(value)"
 
-        if (!self.isLeaf) {
-            description += ": (" + self.children.map { $0.description }.joined(separator: ", ") + ")"
+        if (!isLeaf) {
+            description += ": (" + children.map { $0.description }.joined(separator: ", ") + ")"
         }
 
         return description

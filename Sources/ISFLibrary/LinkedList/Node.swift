@@ -35,6 +35,6 @@ public class Node<T: Equatable> {
 
 extension Node: CustomStringConvertible {
     public var description: String {
-        return "Node(\(self.value))"
+        return "Node(\(value))"
     }
 }

@@ -33,36 +33,36 @@ public struct Queue<T> {
     private var head = 0
 
     public var isEmpty: Bool {
-        return (self.count == 0)
+        return (count == 0)
     }
 
     public var count: Int {
-        return self.elements.count - self.head
+        return elements.count - head
     }
 
     public mutating func push(_ element: T) {
-        self.elements.append(element)
+        elements.append(element)
     }
 
     public mutating func pop() -> T? {
-        guard self.head < self.elements.count, let element = self.elements[self.head] else {
+        guard head < elements.count, let element = elements[head] else {
             return nil
         }
 
-        self.elements[self.head] = nil
-        self.head += 1
+        elements[head] = nil
+        head += 1
 
-        let percentage = Double(self.head) / Double(self.elements.count)
+        let percentage = Double(head) / Double(elements.count)
 
-        if (self.elements.count > 50 && percentage > 0.25) {
-            self.elements.removeFirst(self.head)
-            self.head = 0
+        if (elements.count > 50 && percentage > 0.25) {
+            elements.removeFirst(head)
+            head = 0
         }
 
         return element
     }
 
     public func peek() -> T? {
-        return (self.isEmpty) ? nil : self.elements[self.head]
+        return (isEmpty) ? nil : elements[head]
     }
 }

@@ -26,55 +26,53 @@ public struct LinkedListCOW<T: Equatable> {
     fileprivate var storage: LinkedList<T>
     private var mutableStorage: LinkedList<T> {
         mutating get {
-            if !isKnownUniquelyReferenced(&storage) {
-                self.storage = self.storage.copy()
+            if (!isKnownUniquelyReferenced(&storage)) {
+                storage = storage.copy()
             }
 
-            return self.storage
+            return storage
         }
     }
 
     public init() {
-        self.storage = LinkedList()
+        storage = LinkedList()
     }
 
     public init<S: Sequence>(_ elements: S) where S.Iterator.Element == T {
-        self.storage = LinkedList(elements)
+        storage = LinkedList(elements)
     }
 
     public var count: Int {
-        return self.storage.count
+        return storage.count
     }
 
     public var isEmpty: Bool {
-        return self.storage.isEmpty
+        return storage.isEmpty
     }
 
     public mutating func append(value: T) {
-        self.mutableStorage.append(value: value)
+        mutableStorage.append(value: value)
     }
 
     public func nodeAt(index: Int) -> NodeType {
-        return self.storage.nodeAt(index: index)
+        return storage.nodeAt(index: index)
     }
 
     public func valueAt(index: Int) -> T {
-        let node = nodeAt(index: index)
-
-        return node.value
+        return nodeAt(index: index).value
     }
 
     public mutating func remove(node: NodeType) {
-        self.mutableStorage.remove(node: node)
+        mutableStorage.remove(node: node)
     }
 
     public mutating func remove(atIndex index: Int) {
-        self.mutableStorage.remove(atIndex: index)
+        mutableStorage.remove(atIndex: index)
     }
 }
 
 extension LinkedListCOW: CustomStringConvertible {
     public var description: String {
-        return "LinkedListCOW(storage: \(self.storage))"
+        return "LinkedListCOW(storage: \(storage))"
     }
 }

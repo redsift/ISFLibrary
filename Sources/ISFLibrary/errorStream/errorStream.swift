@@ -24,12 +24,17 @@ import Glibc
 
 public struct StderrOutputStream: TextOutputStream {
     public mutating func write(_ string: String) {
-        let ascii = string.unicodeScalars.lazy.map {
-            ($0 == "\n") ? "\n" : $0.escaped(asASCII: true)
-        }
+        if (escapedErrorStream) {
+            let ascii = string.unicodeScalars.lazy.map { character in
+                (character == "\n") ? "\n" : character.escaped(asASCII: true)
+            }
 
-        fputs(ascii.joined(separator: ""), stderr)
+            fputs(ascii.joined(separator: ""), stderr)
+        } else {
+            fputs(string, stderr)
+        }
     }
 }
 
+public var escapedErrorStream = true
 public var errorStream = StderrOutputStream()

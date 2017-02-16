@@ -27,12 +27,12 @@ public struct LinkedListIterator<T: Equatable>: IteratorProtocol {
     private var currentNode: Element?
 
     init(startNode: Element?) {
-        self.currentNode = startNode
+        currentNode = startNode
     }
 
     public mutating func next() -> LinkedListIterator.Element? {
-        let node = self.currentNode
-        self.currentNode = currentNode?.next
+        let node = currentNode
+        currentNode = currentNode?.next
 
         return node
     }

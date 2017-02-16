@@ -30,23 +30,23 @@ public struct Stack<T> {
     private var elements = [T]()
 
     public var isEmpty: Bool {
-        return self.elements.isEmpty
+        return elements.isEmpty
     }
 
     public var count: Int {
-        return self.elements.count
+        return elements.count
     }
 
     public mutating func push(_ element: T) {
-        self.elements.append(element)
+        elements.append(element)
     }
 
     public mutating func pop() -> T? {
-        return self.elements.popLast()
+        return elements.popLast()
     }
 
     public func peek() -> T? {
-        return self.elements.last
+        return elements.last
     }
 }
 
