@@ -26,22 +26,31 @@ public struct LoggerResults {
     public let line: Int
     public let column: Int
     public let function: String
+    public let more: String
 
     public init(error:    Error,
                 file:     String = #file,
                 line:     Int = #line,
                 column:   Int = #column,
-                function: String = #function) {
+                function: String = #function,
+                more:     String = "") {
         self.error = error
         self.file = file
         self.line = line
         self.column = column
         self.function = function
+        self.more = more
     }
 }
 
 extension LoggerResults: CustomStringConvertible {
     public var description: String {
-        return "error: \(error), file: \(file), line: \(line), column: \(column), function: \(function)"
+        var description = "error: \(error), file: \(file), line: \(line), column: \(column), function: \(function)"
+
+        if (!more.isEmpty) {
+            description += ", more: \(more)"
+        }
+
+        return description
     }
 }

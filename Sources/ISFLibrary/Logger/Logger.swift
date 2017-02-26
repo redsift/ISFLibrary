@@ -39,6 +39,27 @@ public func doCatchWrapper<T>(file:     String = #file,
     }
 }
 
+public func doCatchWrapper<T>(file:     String = #file,
+                              line:     Int = #line,
+                              column:   Int = #column,
+                              function: String = #function,
+                              funcCall: @escaping () throws -> T,
+                              failed:   @escaping (LoggerResults) -> Void = logger,
+                              moreFunc: @escaping () -> String) -> T? {
+    do {
+        return try funcCall()
+    } catch {
+        failed(LoggerResults(error:    error,
+                             file:     file,
+                             line:     line,
+                             column:   column,
+                             function: function,
+                             more:     moreFunc()))
+
+        return nil
+    }
+}
+
 public var logger = { (failure: LoggerResults) -> Void in
     print("\(failure.description)", to: &errorStream)
 }
