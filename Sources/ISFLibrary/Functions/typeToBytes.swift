@@ -20,6 +20,8 @@
     IN THE SOFTWARE.
 */
 
+import C7
+
 /// Convert a type to  byte array.
 ///
 /// - Parameters:
