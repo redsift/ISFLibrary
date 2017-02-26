@@ -1,7 +1,7 @@
 /*
-    compare.swift
+    LoggerResults.swift
 
-    Copyright (c) 2016, 2017 Stephen Whittle  All rights reserved.
+    Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"),
@@ -20,24 +20,28 @@
     IN THE SOFTWARE.
 */
 
-public func compare<S: Sequence>(lhs lhsSequence: S, rhs rhsSequence: S) -> CompareResult where S.Iterator.Element: Comparable {
-    for (lhs, rhs) in zip(lhsSequence, rhsSequence) where lhs != rhs {
-        let result = compare(lhs: lhs, rhs: rhs)
+public struct LoggerResults {
+    public let error: Error
+    public let file: String
+    public let line: Int
+    public let column: Int
+    public let function: String
 
-        if (result != .Equal) {
-            return result
-        }
+    public init(error:    Error,
+                file:     String = #file,
+                line:     Int = #line,
+                column:   Int = #column,
+                function: String = #function) {
+        self.error = error
+        self.file = file
+        self.line = line
+        self.column = column
+        self.function = function
     }
-
-    return .Equal
 }
 
-public func compare<T: Comparable>(lhs: T, rhs: T) -> CompareResult {
-    if (lhs < rhs) {
-        return .LessThan
-    } else if (lhs > rhs) {
-        return .GreaterThan
+extension LoggerResults: CustomStringConvertible {
+    public var description: String {
+        return "error: \(error), file: \(file), line: \(line), column: \(column), function: \(function)"
     }
-
-    return .Equal
 }

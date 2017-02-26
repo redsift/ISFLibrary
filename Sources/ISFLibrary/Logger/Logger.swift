@@ -1,7 +1,7 @@
 /*
-    compare.swift
+    Logger.swift
 
-    Copyright (c) 2016, 2017 Stephen Whittle  All rights reserved.
+    Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"),
@@ -20,24 +20,25 @@
     IN THE SOFTWARE.
 */
 
-public func compare<S: Sequence>(lhs lhsSequence: S, rhs rhsSequence: S) -> CompareResult where S.Iterator.Element: Comparable {
-    for (lhs, rhs) in zip(lhsSequence, rhsSequence) where lhs != rhs {
-        let result = compare(lhs: lhs, rhs: rhs)
+public func doCatchWrapper<T>(file:     String = #file,
+                              line:     Int = #line,
+                              column:   Int = #column,
+                              function: String = #function,
+                              funcCall: @escaping () throws -> T,
+                              failed:   @escaping (LoggerResults) -> Void = logger) -> T? {
+    do {
+        return try funcCall()
+    } catch {
+        failed(LoggerResults(error:    error,
+                             file:     file,
+                             line:     line,
+                             column:   column,
+                             function: function))
 
-        if (result != .Equal) {
-            return result
-        }
+        return nil
     }
-
-    return .Equal
 }
 
-public func compare<T: Comparable>(lhs: T, rhs: T) -> CompareResult {
-    if (lhs < rhs) {
-        return .LessThan
-    } else if (lhs > rhs) {
-        return .GreaterThan
-    }
-
-    return .Equal
+public var logger = { (failure: LoggerResults) -> Void in
+    print("\(failure.description)", to: &errorStream)
 }
