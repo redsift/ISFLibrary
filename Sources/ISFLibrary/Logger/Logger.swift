@@ -25,27 +25,8 @@ public func doCatchWrapper<T>(file:     String = #file,
                               column:   Int = #column,
                               function: String = #function,
                               funcCall: @escaping () throws -> T,
-                              failed:   @escaping (LoggerResults) -> Void = logger) -> T? {
-    do {
-        return try funcCall()
-    } catch {
-        failed(LoggerResults(error:    error,
-                             file:     file,
-                             line:     line,
-                             column:   column,
-                             function: function))
-
-        return nil
-    }
-}
-
-public func doCatchWrapper<T>(file:        String = #file,
-                              line:        Int = #line,
-                              column:      Int = #column,
-                              function:    String = #function,
-                              funcCall:    @escaping () throws -> T,
-                              failed:      @escaping (LoggerResults) -> Void = logger,
-                              objectsFunc: @escaping () -> [Any]) -> T? {
+                              failed:   @escaping (LoggerResults) -> Void = logger,
+                              objFunc:  @escaping () -> [Any] = { return [] }) -> T? {
     do {
         return try funcCall()
     } catch {
@@ -54,7 +35,7 @@ public func doCatchWrapper<T>(file:        String = #file,
                              line:     line,
                              column:   column,
                              function: function,
-                             objects:  objectsFunc()))
+                             objects:  objFunc()))
 
         return nil
     }
