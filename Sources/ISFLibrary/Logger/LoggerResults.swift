@@ -26,20 +26,20 @@ public struct LoggerResults {
     public let line: Int
     public let column: Int
     public let function: String
-    public let more: String
+    public let objects: [Any]?
 
     public init(error:    Error,
                 file:     String = #file,
                 line:     Int = #line,
                 column:   Int = #column,
                 function: String = #function,
-                more:     String = "") {
+                objects:  [Any]? = nil) {
         self.error = error
         self.file = file
         self.line = line
         self.column = column
         self.function = function
-        self.more = more
+        self.objects = objects
     }
 }
 
@@ -47,8 +47,22 @@ extension LoggerResults: CustomStringConvertible {
     public var description: String {
         var description = "error: \(error), file: \(file), line: \(line), column: \(column), function: \(function)"
 
-        if (!more.isEmpty) {
-            description += ", more: \(more)"
+        if (objects != nil) {
+            description += ", objects: ("
+
+            var loopCount = 0
+
+            for object in objects! {
+                if (loopCount > 0) {
+                    description += ","
+                }
+
+                description += " [\(object)]"
+
+                loopCount += 1
+            }
+
+            description += ")"
         }
 
         return description
