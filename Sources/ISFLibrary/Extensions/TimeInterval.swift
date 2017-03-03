@@ -22,11 +22,14 @@
 
 import Foundation
 
-public let secondsPerMinute:       TimeInterval = 60
-public let secondsPerHour:         TimeInterval = secondsPerMinute * 60
-public let secondsPerDay:          TimeInterval = secondsPerHour * 24
-private let millisecondsPerSecond: TimeInterval = 1000
-private let microsecondsPerSecond: TimeInterval = millisecondsPerSecond * 1000
+private let secondsPerMinute:      Double = 60
+private let secondsPerHour:        Double = secondsPerMinute * 60
+private let secondsPerDay:         Double = secondsPerHour * 24
+
+private let decisecondsPerSecond:  Double = 10
+private let centisecondsPerSecond: Double = decisecondsPerSecond * 10
+private let millisecondsPerSecond: Double = centisecondsPerSecond * 10
+private let microsecondsPerSecond: Double = millisecondsPerSecond * 10
 
 public extension TimeInterval {
     public init(days: Int) {
@@ -57,6 +60,26 @@ public extension TimeInterval {
 
     public var seconds: Int {
         return Int(floor(self))
+    }
+}
+
+public extension TimeInterval {
+    public init(deciseconds: Int) {
+        self = Double(deciseconds) / decisecondsPerSecond
+    }
+
+    public var deciseconds: Int {
+        return Int(self * decisecondsPerSecond)
+    }
+}
+
+public extension TimeInterval {
+    public init(centiseconds: Int) {
+        self = Double(centiseconds) / centisecondsPerSecond
+    }
+
+    public var centiseconds: Int {
+        return Int(self * centisecondsPerSecond)
     }
 }
 
