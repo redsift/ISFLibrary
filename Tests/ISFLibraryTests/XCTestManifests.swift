@@ -25,6 +25,7 @@ import XCTest
 
 #if !os(OSX)
 public let allTests = [
+    testCase(TimeIntervalTests.allTests),
     testCase(QueueTests.allTests),
     testCase(StackTests.allTests),
     testCase(TreeNodeTests.allTests)

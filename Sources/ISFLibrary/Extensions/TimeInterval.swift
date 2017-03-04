@@ -27,9 +27,9 @@ private let secondsPerHour:        Double = secondsPerMinute * 60
 private let secondsPerDay:         Double = secondsPerHour * 24
 
 private let decisecondsPerSecond:  Double = 10
-private let centisecondsPerSecond: Double = decisecondsPerSecond * 10
-private let millisecondsPerSecond: Double = centisecondsPerSecond * 10
-private let microsecondsPerSecond: Double = millisecondsPerSecond * 10
+private let centisecondsPerSecond: Double = 100
+private let millisecondsPerSecond: Double = 1_000
+private let microsecondsPerSecond: Double = 1_000_000
 
 public extension TimeInterval {
     public init(days: Int) {
@@ -58,9 +58,16 @@ public extension TimeInterval {
         self = seconds
     }
 
-    public var seconds: Int {
+    public var wholeSeconds: Int {
         return Int(floor(self))
     }
+
+    /* covered by extension Double in C7
+
+    public var seconds: TimeInterval {
+        return self
+    }
+    */
 }
 
 public extension TimeInterval {
