@@ -44,11 +44,6 @@ public final class LinkedList<T: Equatable> {
     /// the number of elements in the list at any given time
     public fileprivate(set) var count: Int = 0
 
-    /// wether or not the list is empty
-    public var isEmpty: Bool {
-        return (count == 0)
-    }
-
     /// create a new LinkedList
     public init() { }
 
@@ -57,6 +52,13 @@ public final class LinkedList<T: Equatable> {
         for element in elements {
             append(value: element)
         }
+    }
+}
+
+extension LinkedList {
+    /// wether or not the list is empty
+    public var isEmpty: Bool {
+        return (count == 0)
     }
 }
 

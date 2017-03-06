@@ -26,7 +26,7 @@ public struct LinkedListIterator<T: Equatable>: IteratorProtocol {
     /// the current node in the iteration
     private var currentNode: Element?
 
-    init(startNode: Element?) {
+    public init(startNode: Element?) {
         currentNode = startNode
     }
 

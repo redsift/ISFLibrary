@@ -20,22 +20,24 @@
     IN THE SOFTWARE.
 */
 
-public func doCatchWrapper<T>(file:     String = #file,
-                              line:     Int = #line,
-                              column:   Int = #column,
-                              function: String = #function,
-                              funcCall: @escaping () throws -> T,
-                              failed:   @escaping (LoggerResults) -> Void = logger,
-                              objFunc:  @escaping () -> [Any] = { return [] }) -> T? {
+public func wrapper<T>(file:         String = #file,
+                       line:         Int = #line,
+                       column:       Int = #column,
+                       function:     String = #function,
+                       do closure:   @escaping () throws -> T?,
+                       catch failed: @escaping (LoggerResults) -> Void = logger,
+                       capture:      @escaping () -> [Any] = { return [] }) -> T? {
     do {
-        return try funcCall()
+        return try closure()
     } catch {
+        let objects = capture()
+
         failed(LoggerResults(error:    error,
                              file:     file,
                              line:     line,
                              column:   column,
                              function: function,
-                             objects:  objFunc()))
+                             objects:  objects))
 
         return nil
     }
