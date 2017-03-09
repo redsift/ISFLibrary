@@ -62,12 +62,9 @@ public extension TimeInterval {
         return Int(floor(self))
     }
 
-    /* covered by extension Double in C7
-
     public var seconds: TimeInterval {
         return self
     }
-    */
 }
 
 public extension TimeInterval {

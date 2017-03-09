@@ -1,5 +1,5 @@
 /*
-    typeToBytes.swift
+    Byte.swift
 
     Copyright (c) 2016, 2017 Stephen Whittle  All rights reserved.
 
@@ -20,19 +20,4 @@
     IN THE SOFTWARE.
 */
 
-/// Convert a type to  byte array.
-///
-/// - Parameters:
-///   - value: The value to convert.
-///
-/// - Returns: the result as a byte array.
-public func typeToBytes<T>(_ value: T) -> [Byte] {
-    var mutableValue = value
-    let typeSize = MemoryLayout<T>.size
-
-    return withUnsafePointer(to: &mutableValue) {                                 // -> get pointer to value of T
-        $0.withMemoryRebound(to: UInt8.self, capacity: typeSize) {                // -> rebind memory to the target type, which is a byte array
-            Array(UnsafeBufferPointer(start: $0, count: typeSize))                // -> create array with a buffer pointer initialized with the source pointer
-        }                                                                         // -> return the resulted array
-    }
-}
+public typealias Byte = UInt8

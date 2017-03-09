@@ -23,11 +23,5 @@
 import PackageDescription
 
 let package = Package (
-    name: "ISFLibrary",
-    dependencies: [
-        .Package (
-            url:          "https://github.com/open-swift/C7.git",
-            majorVersion: 0
-        )
-    ]
+    name: "ISFLibrary"
 )
