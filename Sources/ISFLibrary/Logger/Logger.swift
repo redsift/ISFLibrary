@@ -24,7 +24,7 @@ public func wrapper<T>(file:         String = #file,
                        line:         Int = #line,
                        column:       Int = #column,
                        function:     String = #function,
-                       do closure:   @escaping () throws -> T?,
+                       do closure:   @escaping () throws -> T,
                        catch failed: @escaping (LoggerResults) -> Void = logger,
                        capture:      @escaping () -> [Any] = { return [] }) -> T? {
     do {
