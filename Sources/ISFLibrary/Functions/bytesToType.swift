@@ -26,7 +26,7 @@
 ///   - value: The byte array to convert
 ///
 /// - Returns: the result as type.
-public func bytesToType<T>(_ value: [Byte], _: T.Type) -> T {
+public func bytesToType<T>(_ value: Array<Byte>, _: T.Type) -> T {
     return value.withUnsafeBufferPointer {                                                    // -> get pointer to byte array (UnsafeBufferPointer<[Byte]>)
         $0.baseAddress!.withMemoryRebound(to: T.self, capacity: MemoryLayout<Byte>.size) {    // -> access its base address
             $0.pointee                                                                        // -> rebind memory to target type T (UnsafeMutablePointer<T>)

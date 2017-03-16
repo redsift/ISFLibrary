@@ -24,7 +24,7 @@ public class TreeNode<T> {
     public var value: T
 
     public weak var parent: TreeNode?
-    public var children = [TreeNode<T>]()
+    public var children = Array<TreeNode<T>>()
 
     public var isRoot: Bool {
         return (parent == nil) ? true : false

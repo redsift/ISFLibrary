@@ -20,6 +20,6 @@
     IN THE SOFTWARE.
 */
 
-public func bridgeRetained<T : AnyObject>(object: T) -> UnsafeRawPointer {
+public func bridgeRetained<T: AnyObject>(object: T) -> UnsafeRawPointer {
     return UnsafeRawPointer(Unmanaged.passRetained(object).toOpaque())
 }

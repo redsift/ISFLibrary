@@ -26,7 +26,7 @@ public func wrapper<T>(file:         String = #file,
                        function:     String = #function,
                        do closure:   @escaping () throws -> T,
                        catch failed: @escaping (LoggerResults) -> Void = logger,
-                       capture:      @escaping () -> [Any] = { return [] }) -> T? {
+                       capture:      @escaping () -> Array<Any> = { return [] }) -> T? {
     do {
         return try closure()
     } catch {

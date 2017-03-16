@@ -26,14 +26,14 @@ public struct LoggerResults {
     public let line: Int
     public let column: Int
     public let function: String
-    public let objects: [Any]?
+    public let objects: Array<Any>?
 
     public init(error:    Error,
                 file:     String = #file,
                 line:     Int = #line,
                 column:   Int = #column,
                 function: String = #function,
-                objects:  [Any]? = nil) {
+                objects:  Array<Any>? = nil) {
         self.error = error
         self.file = file
         self.line = line

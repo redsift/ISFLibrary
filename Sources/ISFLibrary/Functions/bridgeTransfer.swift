@@ -20,6 +20,6 @@
     IN THE SOFTWARE.
 */
 
-public func bridgeTransfer<T : AnyObject>(pointer: UnsafeRawPointer) -> T {
+public func bridgeTransfer<T: AnyObject>(pointer: UnsafeRawPointer) -> T {
     return Unmanaged<T>.fromOpaque(pointer).takeRetainedValue()
 }

@@ -29,7 +29,7 @@
     pushing and poping are O(1) operations.
 */
 public struct Queue<T> {
-    private var elements = [T?]()
+    private var elements = Array<T?>()
     private var head = 0
 
     public var isEmpty: Bool {

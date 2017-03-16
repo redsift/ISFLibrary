@@ -23,7 +23,7 @@
 import Foundation
 
 public extension Data {
-    public var bytes: [Byte] {
+    public var bytes: Array<Byte> {
         return self.withUnsafeBytes { ptr in
             Array(UnsafeBufferPointer<Byte>(start: ptr, count: self.count))
         }

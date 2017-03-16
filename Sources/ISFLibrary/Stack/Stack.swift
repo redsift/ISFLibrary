@@ -27,7 +27,7 @@
 */
 
 public struct Stack<T> {
-    private var elements = [T]()
+    private var elements = Array<T>()
 
     public var isEmpty: Bool {
         return elements.isEmpty

@@ -26,7 +26,7 @@
 ///   - value: The value to convert.
 ///
 /// - Returns: the result as a byte array.
-public func typeToBytes<T>(_ value: T) -> [Byte] {
+public func typeToBytes<T>(_ value: T) -> Array<Byte> {
     var mutableValue = value
     let typeSize = MemoryLayout<T>.size
 
