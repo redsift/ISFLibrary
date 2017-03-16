@@ -30,14 +30,12 @@ public func wrapper<T>(file:         String = #file,
     do {
         return try closure()
     } catch {
-        let objects = capture()
-
         failed(LoggerResults(error:    error,
                              file:     file,
                              line:     line,
                              column:   column,
                              function: function,
-                             objects:  objects))
+                             objects:  capture()))
 
         return nil
     }

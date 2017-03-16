@@ -1,7 +1,7 @@
 /*
-    Stack.swift
+    SequentialCollection.swift
 
-    Copyright (c) 2016, 2017 Stephen Whittle  All rights reserved.
+    Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"),
@@ -20,38 +20,19 @@
     IN THE SOFTWARE.
 */
 
-/*
-    Last-in first-out stack (LIFO)
+public protocol SequentialCollection {
+    associatedtype T
 
-    Push and pop are O(1) operations.
-*/
+    var isEmpty: Bool { get }
+    var count: Int { get }
 
-public struct Stack<T>: SequentialCollection {
-    private var elements = Array<T>()
-
-    public var count: Int {
-        return elements.count
-    }
-
-    public mutating func push(_ element: T) {
-        elements.append(element)
-    }
-
-    public mutating func pop() -> T? {
-        return elements.popLast()
-    }
-
-    public func peek() -> T? {
-        return elements.last
-    }
+    mutating func push(_ element: T)
+    mutating func pop() -> T?
+    func peek() -> T?
 }
 
-extension Stack: Sequence {
-    public func makeIterator() -> AnyIterator<T> {
-        var current = self
-
-        return AnyIterator { _ -> T? in
-            return current.pop()
-        }
+extension SequentialCollection {
+    public var isEmpty: Bool {
+        return (count == 0)
     }
 }

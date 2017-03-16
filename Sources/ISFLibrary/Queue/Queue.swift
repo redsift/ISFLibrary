@@ -28,13 +28,9 @@
 
     pushing and poping are O(1) operations.
 */
-public struct Queue<T> {
+public struct Queue<T>: SequentialCollection {
     private var elements = Array<T?>()
     private var head = 0
-
-    public var isEmpty: Bool {
-        return (count == 0)
-    }
 
     public var count: Int {
         return elements.count - head
