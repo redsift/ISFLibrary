@@ -20,7 +20,7 @@
     IN THE SOFTWARE.
 */
 
-public protocol SequentialCollection {
+public protocol SequentialCollection: Sequence {
     associatedtype T
 
     var isEmpty: Bool { get }
@@ -34,5 +34,16 @@ public protocol SequentialCollection {
 extension SequentialCollection {
     public var isEmpty: Bool {
         return (count == 0)
+    }
+}
+
+// implementation of Sequence
+extension SequentialCollection {
+    public func makeIterator() -> AnyIterator<T> {
+        var current = self
+
+        return AnyIterator {
+            return current.pop()
+        }
     }
 }

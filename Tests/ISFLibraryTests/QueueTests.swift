@@ -95,12 +95,29 @@ class QueueTests: XCTestCase {
         XCTAssertEqual(queue.peek(), nil)
     }
 
+    func testSequence() {
+        var queue = Queue<Int>()
+
+        for count in 1...10 {
+            queue.push(count)
+        }
+
+        var count = 1
+
+        for value in queue {
+            XCTAssertEqual(value, count, "\(value) != \(count)")
+
+            count += 1
+        }
+    }
+
 #if !os(OSX)
     static let allTests = [
         ("testEmpty", testEmpty),
         ("testOneElement", testOneElement),
         ("testTwoElements", testTwoElements),
-        ("testMakeEmpty", testMakeEmpty)
+        ("testMakeEmpty", testMakeEmpty),
+        ("testSequence", testSequence)
     ]
 #endif
 }

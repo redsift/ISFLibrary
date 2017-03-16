@@ -28,6 +28,7 @@
 
     pushing and poping are O(1) operations.
 */
+
 public struct Queue<T>: SequentialCollection {
     private var elements = Array<T?>()
     private var head = 0

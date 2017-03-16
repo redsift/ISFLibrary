@@ -45,13 +45,3 @@ public struct Stack<T>: SequentialCollection {
         return elements.last
     }
 }
-
-extension Stack: Sequence {
-    public func makeIterator() -> AnyIterator<T> {
-        var current = self
-
-        return AnyIterator { _ -> T? in
-            return current.pop()
-        }
-    }
-}
