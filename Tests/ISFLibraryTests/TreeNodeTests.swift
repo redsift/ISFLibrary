@@ -65,14 +65,20 @@ class TreeNodeTests: XCTestCase {
 
         print(tree)
 
-        if (tree.description != "beverages: (hot: (tea: (black, green, chai), coffee, cocoa), cold: (soda: (ginger ale, bitter lemon), milk))") {
-            XCTAssert(false, "sructure not as expected")
-        }
-
         if let result = tree.search(for: "beverages") {
             XCTAssertEqual(result.isRoot, true, "beverages is a root!")
             XCTAssertEqual(result.isLeaf, false, "beverages is a leaf!")
             XCTAssertEqual(result.isNode, false, "beverages is a not a node!")
+
+            if let parent = result.parent {
+                XCTAssert(false, "beverages has a parent of \(parent.value)!")
+            } else if (result.children[1].value != "cold") {
+                XCTAssert(false, "second child of beverage is not \(result.children[1].value)!")
+            }
+
+            if (result.description != "beverages: (hot: (tea: (black, green, chai), coffee, cocoa), cold: (soda: (ginger ale, bitter lemon), milk))") {
+                XCTAssert(false, "beverages sructure not as expected!")
+            }
         } else {
             XCTAssert(false, "beverages not found!")
         }
@@ -81,6 +87,18 @@ class TreeNodeTests: XCTestCase {
             XCTAssertEqual(result.isRoot, false, "soda is a root!")
             XCTAssertEqual(result.isLeaf, false, "soda is a leaf!")
             XCTAssertEqual(result.isNode, true, "soda is a a node!")
+
+            if let parent = result.parent {
+                if (parent.value != "cold") {
+                    XCTAssert(false, "parent of soda is not \(parent.value)!")
+                }
+            } else {
+                XCTAssert(false, "parent of soda not found!")
+            }
+
+            if (result.description != "soda: (ginger ale, bitter lemon)") {
+                XCTAssert(false, "soda sructure not as expected!")
+            }
         } else {
             XCTAssert(false, "soda not found!")
         }
@@ -89,6 +107,18 @@ class TreeNodeTests: XCTestCase {
             XCTAssertEqual(result.isRoot, false, "green tea is a root!")
             XCTAssertEqual(result.isLeaf, true, "green tea is a leaf!")
             XCTAssertEqual(result.isNode, false, "green tea is a node!")
+
+            if let parent = result.parent {
+                if (parent.value != "tea") {
+                    XCTAssert(false, "parent of green tea is not \(parent.value)!")
+                }
+            } else {
+                XCTAssert(false, "parent of green tea not found!")
+            }
+
+            if (result.description != "green") {
+                XCTAssert(false, "green tea sructure not as expected!")
+            }
         } else {
             XCTAssert(false, "green tea not found!")
         }
