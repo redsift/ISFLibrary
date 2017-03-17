@@ -64,6 +64,34 @@ class TreeNodeTests: XCTestCase {
         soda.addChild(node: bitterLemon)
 
         print(tree)
+
+        if (tree.description != "beverages: (hot: (tea: (black, green, chai), coffee, cocoa), cold: (soda: (ginger ale, bitter lemon), milk))") {
+            XCTAssert(false, "sructure not as expected")
+        }
+
+        if let result = tree.search(for: "beverages") {
+            XCTAssertEqual(result.isRoot, true, "beverages is a root!")
+            XCTAssertEqual(result.isLeaf, false, "beverages is a leaf!")
+            XCTAssertEqual(result.isNode, false, "beverages is a not a node!")
+        } else {
+            XCTAssert(false, "beverages not found!")
+        }
+
+        if let result = tree.search(for: "soda") {
+            XCTAssertEqual(result.isRoot, false, "soda is a root!")
+            XCTAssertEqual(result.isLeaf, false, "soda is a leaf!")
+            XCTAssertEqual(result.isNode, true, "soda is a a node!")
+        } else {
+            XCTAssert(false, "soda not found!")
+        }
+
+        if let result = tree.search(for: "green") {
+            XCTAssertEqual(result.isRoot, false, "green tea is a root!")
+            XCTAssertEqual(result.isLeaf, true, "green tea is a leaf!")
+            XCTAssertEqual(result.isNode, false, "green tea is a node!")
+        } else {
+            XCTAssert(false, "green tea not found!")
+        }
     }
 
 #if !os(OSX)

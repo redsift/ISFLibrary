@@ -98,7 +98,7 @@ class QueueTests: XCTestCase {
     func testSequence() {
         var queue = Queue<Int>()
 
-        for count in 1...10 {
+        for count in 1...100 {
             queue.push(count)
         }
 

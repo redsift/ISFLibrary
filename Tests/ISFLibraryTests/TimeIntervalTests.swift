@@ -39,27 +39,37 @@ class TimeIntervalTests: XCTestCase {
 
         XCTAssertEqual(timeInterval.wholeSeconds, 0, "deciseconds to wholeSeconds")
         XCTAssertEqual(timeInterval.seconds, 0.1, "deciseconds to seconds")
+        XCTAssertEqual(timeInterval.deciseconds, 1, "deciseconds to deciseconds")
         XCTAssertEqual(timeInterval.centiseconds, 10, "deciseconds to centiseconds")
         XCTAssertEqual(timeInterval.milliseconds, 100, "deciseconds to milliseconds")
         XCTAssertEqual(timeInterval.microseconds, 100_000, "deciseconds to microseconds")
 
         timeInterval = TimeInterval(centiseconds: 1)
 
+        XCTAssertEqual(timeInterval.wholeSeconds, 0, "centiseconds to wholeSeconds")
         XCTAssertEqual(timeInterval.seconds, 0.01, "centiseconds to seconds")
         XCTAssertEqual(timeInterval.deciseconds, 0, "centiseconds to deciseconds")
+        XCTAssertEqual(timeInterval.centiseconds, 1, "centiseconds to centiseconds")
         XCTAssertEqual(timeInterval.milliseconds, 10, "centiseconds to milliseconds")
         XCTAssertEqual(timeInterval.microseconds, 10_000, "centiseconds to microseconds")
 
         timeInterval = TimeInterval(milliseconds: 1)
 
+        XCTAssertEqual(timeInterval.wholeSeconds, 0, "milliseconds to wholeSeconds")
         XCTAssertEqual(timeInterval.seconds, 0.001, "milliseconds to seconds")
         XCTAssertEqual(timeInterval.deciseconds, 0, "milliseconds to deciseconds")
         XCTAssertEqual(timeInterval.centiseconds, 0, "milliseconds to centiseconds")
+        XCTAssertEqual(timeInterval.milliseconds, 1, "milliseconds to milliseconds")
         XCTAssertEqual(timeInterval.microseconds, 1_000, "milliseconds to microseconds")
 
         timeInterval = TimeInterval(microseconds: 1)
 
+        XCTAssertEqual(timeInterval.wholeSeconds, 0, "microseconds to wholeSeconds")
         XCTAssertEqual(timeInterval.seconds, 0.000001, "microseconds to seconds")
+        XCTAssertEqual(timeInterval.deciseconds, 0, "microseconds to deciseconds")
+        XCTAssertEqual(timeInterval.centiseconds, 0, "microseconds to centiseconds")
+        XCTAssertEqual(timeInterval.milliseconds, 0, "microseconds to microseconds")
+        XCTAssertEqual(timeInterval.microseconds, 1, "microseconds to microseconds")
     }
 
 #if !os(OSX)

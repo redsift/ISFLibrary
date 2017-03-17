@@ -101,11 +101,11 @@ class StackTests: XCTestCase {
     func testSequence() {
         var queue = Stack<Int>()
 
-        for count in 1...10 {
+        for count in 1...100 {
             queue.push(count)
         }
 
-        var count = 10
+        var count = 100
 
         for value in queue {
             XCTAssertEqual(value, count, "\(value) != \(count)")
