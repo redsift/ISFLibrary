@@ -20,7 +20,9 @@
     IN THE SOFTWARE.
 */
 
-extension String {
+import Foundation
+
+public extension String {
     public init<T>(tuple: T) {
         var result = Array<CChar>()
         let mirror = Mirror(reflecting: tuple)
@@ -34,5 +36,9 @@ extension String {
         result.append(CChar(0))  // Null terminate
 
         self = String(cString: result)
+    }
+
+    public var isNumber: Bool {
+        return (!self.isEmpty && self.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil)
     }
 }

@@ -76,12 +76,12 @@ extension LinkedList {
 }
 
 extension LinkedList {
-    fileprivate func iterate(block: (NodeType, Int) throws -> NodeType?) rethrows -> NodeType? {
+    fileprivate func iterate(_ closure: (NodeType, Int) throws -> NodeType?) rethrows -> NodeType? {
         var node = start
         var index = 0
 
         while (node != nil) {
-            let result = try block(node!, index)
+            let result = try closure(node!, index)
 
             if (result != nil) {
                 return result

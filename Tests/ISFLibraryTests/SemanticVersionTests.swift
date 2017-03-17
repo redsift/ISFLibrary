@@ -1,5 +1,5 @@
 /*
-    delay.swift
+    SemanticVersionTests.swift
 
     Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
@@ -20,11 +20,35 @@
     IN THE SOFTWARE.
 */
 
-import Foundation
-import Dispatch
+import XCTest
+@testable import ISFLibrary
 
-public func delay(bySeconds seconds: TimeInterval, dispatchLevel: DispatchLevel = .main, _ closure: @escaping () -> Void) {
-    let dispatchTime = DispatchTime.now() + seconds
+class SemanticVersionTests: XCTestCase {
+    func testSemanticVersion() {
+        let version = SemanticVersion(major: 1, minor: 2, patch: 3)
 
-    dispatchLevel.dispatchQueue.asyncAfter(deadline: dispatchTime, execute: closure)
+        XCTAssertEqual(version.major, 1, "version.major != 1")
+        XCTAssertEqual(version.minor, 2, "version.minor != 2")
+        XCTAssertEqual(version.patch, 3, "version.patch != 3")
+
+        if let temp = SemanticVersion(rawValue: version.description) {
+            XCTAssertEqual(temp.major, 1, "temp.major != 1")
+            XCTAssertEqual(temp.minor, 2, "temp.minor != 2")
+            XCTAssertEqual(temp.patch, 3, "temp.patch != 3")
+        } else {
+            XCTAssert(false, "\(version.description) not converted to a SemanticVersion()!")
+        }
+
+        let versionString = "1.a.3"
+
+        if let _ = SemanticVersion(rawValue: versionString) {
+            XCTAssert(false, "\(versionString) converted to a SemanticVersion()!")
+        }
+    }
+
+#if !os(OSX)
+    static let allTests = [
+        ("testSemanticVersion", testSemanticVersion)
+    ]
+#endif
 }

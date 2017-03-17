@@ -23,10 +23,10 @@
 /*
     First-in first-out queue (FIFO)
 
-    New elements are added to the end of the queue. Poping pulls elements from
-    the front of the queue.
+    New elements are added (pushed) to the end of the queue. Poping pulls elements
+    from the front of the queue.
 
-    pushing and poping are O(1) operations.
+    push() and pop() are O(1) operations.
 */
 
 public struct Queue<T>: SequentialCollection {

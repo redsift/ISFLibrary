@@ -25,3 +25,18 @@ import PackageDescription
 let package = Package (
     name: "ISFLibrary"
 )
+
+let staticLibrary = Product(
+    name:    "ISFLibrary",
+    type:    .Library(.Static),
+    modules: ["ISFLibrary"]
+)
+
+let dynamicLibrary = Product(
+    name:    "ISFLibrary",
+    type:    .Library(.Dynamic),
+    modules: ["ISFLibrary"]
+)
+
+products.append(staticLibrary)
+products.append(dynamicLibrary)

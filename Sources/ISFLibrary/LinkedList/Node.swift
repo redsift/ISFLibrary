@@ -21,12 +21,12 @@
 */
 
 public class Node<T: Equatable> {
-    typealias NodeType = Node<T>
+    public typealias NodeType = Node<T>
 
     /// The value contained in this node
     public let value: T
-    var next: NodeType? = nil
-    var previous: NodeType? = nil
+    public var next: NodeType? = nil
+    public var previous: NodeType? = nil
 
     public init(value: T) {
         self.value = value

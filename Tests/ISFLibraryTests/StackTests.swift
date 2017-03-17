@@ -38,6 +38,7 @@ class StackTests: XCTestCase {
         var stack = Stack<Int>()
 
         stack.push(123)
+
         XCTAssertFalse(stack.isEmpty)
         XCTAssertEqual(stack.count, 1)
         XCTAssertEqual(stack.peek(), 123)
@@ -56,6 +57,7 @@ class StackTests: XCTestCase {
 
         stack.push(123)
         stack.push(456)
+
         XCTAssertFalse(stack.isEmpty)
         XCTAssertEqual(stack.count, 2)
         XCTAssertEqual(stack.peek(), 456)
@@ -81,11 +83,13 @@ class StackTests: XCTestCase {
 
         stack.push(123)
         stack.push(456)
+
         XCTAssertNotNil(stack.pop())
         XCTAssertNotNil(stack.pop())
         XCTAssertNil(stack.pop())
 
         stack.push(789)
+
         XCTAssertEqual(stack.count, 1)
         XCTAssertEqual(stack.peek(), 789)
 

@@ -3,7 +3,7 @@ all: build
 build:
 	swift build
 
-build-release:
+release:
 	swift build --configuration release
 
 test:

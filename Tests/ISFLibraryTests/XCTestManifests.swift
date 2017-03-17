@@ -28,6 +28,7 @@ public let allTests = [
     testCase(TimeIntervalTests.allTests),
     testCase(QueueTests.allTests),
     testCase(StackTests.allTests),
-    testCase(TreeNodeTests.allTests)
+    testCase(TreeNodeTests.allTests),
+    testCase(SemanticVersionTests.allTests)
 ]
 #endif

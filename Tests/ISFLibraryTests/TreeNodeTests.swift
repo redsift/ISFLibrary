@@ -63,8 +63,6 @@ class TreeNodeTests: XCTestCase {
         soda.addChild(node: gingerAle)
         soda.addChild(node: bitterLemon)
 
-        print(tree)
-
         if let result = tree.search(for: "beverages") {
             XCTAssertEqual(result.isRoot, true, "beverages is a root!")
             XCTAssertEqual(result.isLeaf, false, "beverages is a leaf!")

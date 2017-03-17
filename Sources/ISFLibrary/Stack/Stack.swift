@@ -23,7 +23,7 @@
 /*
     Last-in first-out stack (LIFO)
 
-    Push and pop are O(1) operations.
+    push() and pop() are O(1) operations.
 */
 
 public struct Stack<T>: SequentialCollection {

@@ -38,6 +38,7 @@ class QueueTests: XCTestCase {
         var queue = Queue<Int>()
 
         queue.push(123)
+
         XCTAssertFalse(queue.isEmpty)
         XCTAssertEqual(queue.count, 1)
         XCTAssertEqual(queue.peek(), 123)
@@ -55,6 +56,7 @@ class QueueTests: XCTestCase {
 
         queue.push(123)
         queue.push(456)
+
         XCTAssertFalse(queue.isEmpty)
         XCTAssertEqual(queue.count, 2)
         XCTAssertEqual(queue.peek(), 123)
@@ -79,11 +81,13 @@ class QueueTests: XCTestCase {
 
         queue.push(123)
         queue.push(456)
+
         XCTAssertNotNil(queue.pop())
         XCTAssertNotNil(queue.pop())
         XCTAssertNil(queue.pop())
 
         queue.push(789)
+
         XCTAssertEqual(queue.count, 1)
         XCTAssertEqual(queue.peek(), 789)
 

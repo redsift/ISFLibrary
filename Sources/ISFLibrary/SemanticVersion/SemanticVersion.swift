@@ -1,5 +1,5 @@
 /*
-    delay.swift
+    SemanticVersion.swift
 
     Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
@@ -21,10 +21,45 @@
 */
 
 import Foundation
-import Dispatch
 
-public func delay(bySeconds seconds: TimeInterval, dispatchLevel: DispatchLevel = .main, _ closure: @escaping () -> Void) {
-    let dispatchTime = DispatchTime.now() + seconds
+public struct SemanticVersion {
+    public var major: UInt
+    public var minor: UInt
+    public var patch: UInt
 
-    dispatchLevel.dispatchQueue.asyncAfter(deadline: dispatchTime, execute: closure)
+    public init(major: UInt, minor: UInt, patch: UInt) {
+        self.major = major
+        self.minor = minor
+        self.patch = patch
+    }
+}
+
+extension SemanticVersion: RawRepresentable {
+    public init?(rawValue: String) {
+        let version = rawValue.components(separatedBy: CharacterSet(charactersIn: "."))
+
+        guard (version.count == 3 && version[0].isNumber && version[1].isNumber && version[2].isNumber) else {
+            return nil
+        }
+
+        self.major = UInt(version[0])!
+        self.minor = UInt(version[1])!
+        self.patch = UInt(version[2])!
+    }
+
+    public var rawValue: String {
+        return "\(major).\(minor).\(patch)"
+    }
+}
+
+extension SemanticVersion: Equatable {
+    public static func ==(lhs: SemanticVersion, rhs: SemanticVersion) -> Bool {
+        return (lhs.major == rhs.major && lhs.minor == rhs.minor && lhs.patch == rhs.patch)
+    }
+}
+
+extension SemanticVersion: CustomStringConvertible {
+    public var description: String {
+        return rawValue
+    }
 }
