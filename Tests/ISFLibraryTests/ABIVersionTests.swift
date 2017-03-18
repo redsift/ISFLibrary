@@ -1,5 +1,5 @@
 /*
-    SemanticVersion.swift
+    ABIVersionTests.swift
 
     Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
@@ -20,46 +20,35 @@
     IN THE SOFTWARE.
 */
 
-import Foundation
+import XCTest
+@testable import ISFLibrary
 
-public struct SemanticVersion {
-    public var major: UInt
-    public var minor: UInt
-    public var patch: UInt
+class ABIVersionTests: XCTestCase {
+    func testABIVersion() {
+        let version = ABIVersion(current: 1, revision: 2, age: 3)
 
-    public init(major: UInt, minor: UInt, patch: UInt) {
-        self.major = major
-        self.minor = minor
-        self.patch = patch
-    }
-}
+        XCTAssertEqual(version.current, 1, "version.current != 1")
+        XCTAssertEqual(version.revision, 2, "version.revision != 2")
+        XCTAssertEqual(version.age, 3, "version.age != 3")
 
-extension SemanticVersion: RawRepresentable {
-    public init?(rawValue: String) {
-        let version = rawValue.components(separatedBy: CharacterSet(charactersIn: "."))
-
-        guard (version.count == 3 && version[0].isNumber && version[1].isNumber && version[2].isNumber) else {
-            return nil
+        if let temp = ABIVersion(rawValue: version.description) {
+            XCTAssertEqual(temp.current, 1, "temp.current != 1")
+            XCTAssertEqual(temp.revision, 2, "temp.revision != 2")
+            XCTAssertEqual(temp.age, 3, "temp.age != 3")
+        } else {
+            XCTAssert(false, "\(version.description) not converted to a ABIVersion()!")
         }
 
-        self.major = UInt(version[0])!
-        self.minor = UInt(version[1])!
-        self.patch = UInt(version[2])!
+        let versionString = "1.a.3"
+
+        if let _ = ABIVersion(rawValue: versionString) {
+            XCTAssert(false, "\(versionString) converted to a ABIVersion()!")
+        }
     }
 
-    public var rawValue: String {
-        return "\(major).\(minor).\(patch)"
-    }
-}
-
-extension SemanticVersion: Equatable {
-    public static func ==(lhs: SemanticVersion, rhs: SemanticVersion) -> Bool {
-        return (lhs.major == rhs.major && lhs.minor == rhs.minor && lhs.patch == rhs.patch)
-    }
-}
-
-extension SemanticVersion: CustomStringConvertible {
-    public var description: String {
-        return rawValue
-    }
+#if !os(OSX)
+    static let allTests = [
+        ("testABIVersion", testABIVersion)
+    ]
+#endif
 }

@@ -1,7 +1,7 @@
 /*
-    XCTestManifests.swift
+    VersionRepresentable.swift
 
-    Copyright (c) 2016, 2017 Stephen Whittle  All rights reserved.
+    Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"),
@@ -21,15 +21,24 @@
 */
 
 import Foundation
-import XCTest
 
-#if !os(OSX)
-public let allTests = [
-    testCase(TimeIntervalTests.allTests),
-    testCase(QueueTests.allTests),
-    testCase(StackTests.allTests),
-    testCase(TreeNodeTests.allTests),
-    testCase(ABIVersionTests.allTests),
-    testCase(SemanticVersionTests.allTests)
-]
-#endif
+public protocol VersionRepresentable: RawRepresentable, Comparable, Equatable, CustomStringConvertible { }
+
+extension VersionRepresentable {
+    internal func getVersion(from string: String) -> Array<UInt>? {
+        let version = string.components(separatedBy: CharacterSet(charactersIn: "."))
+
+        guard (version.count == 3 && version[0].isNumber && version[1].isNumber && version[2].isNumber) else {
+            return nil
+        }
+
+        return Array<UInt>(arrayLiteral: UInt(version[0])!, UInt(version[1])!, UInt(version[2])!)
+    }
+}
+
+// implementation of CustomStringConvertible
+extension VersionRepresentable {
+    public var description: String {
+        return rawValue as! String
+    }
+}
