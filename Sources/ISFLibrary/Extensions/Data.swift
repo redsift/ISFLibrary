@@ -24,8 +24,13 @@ import Foundation
 
 public extension Data {
     public var bytes: Array<Byte> {
-        return self.withUnsafeBytes { ptr in
-            Array(UnsafeBufferPointer<Byte>(start: ptr, count: self.count))
+        get {
+            return self.withUnsafeBytes { pointer in
+                Array(UnsafeBufferPointer<Byte>(start: pointer, count: self.count))
+            }
+        }
+        mutating set {
+            self = Data(bytes: newValue)
         }
     }
 }

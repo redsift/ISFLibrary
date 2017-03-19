@@ -1,7 +1,7 @@
 /*
     String.swift
 
-    Copyright (c) 2016, 2017 Stephen Whittle  All rights reserved.
+    Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"),
@@ -23,22 +23,51 @@
 import Foundation
 
 public extension String {
-    public init<T>(tuple: T) {
-        var result = Array<CChar>()
-        let mirror = Mirror(reflecting: tuple)
-
-        for child in mirror.children {
-            if let value = child.value as? CChar {
-                result.append(value)
-            }
-        }
-
-        result.append(CChar(0))  // Null terminate
-
-        self = String(cString: result)
+    private struct NumericRegex {
+        static let integer               = "^[\\-\\+]?[0-9]+$"
+        static let positiveInteger       = "^[+]?[0-9]+$"
+        static let negativeInteger       = "^[-][0-9]+$"
+        static let decimal               = "^[-+]?([0-9]+|\\.[0-9]+|[0-9]+\\.[0-9]+)$"
+        static let positiveDecimal       = "^[+]?([0-9]+|\\.[0-9]+|[0-9]+\\.[0-9]+)$"
+        static let negativeDecimal       = "^[-]([0-9]+|\\.[0-9]+|[0-9]+\\.[0-9]+)$"
+        static let floatingPoint         = "^(?:[-+]?(?:[0-9]+))?(?:\\.[0-9]*)?(?:[eE][\\+\\-]?(?:[0-9]+))?$"
+        static let positiveFloatingPoint = "^(?:[+]?(?:[0-9]+))?(?:\\.[0-9]*)?(?:[eE][\\+\\-]?(?:[0-9]+))?$"
+        static let negativeFloatingPoint = "^(?:[-](?:[0-9]+))?(?:\\.[0-9]*)?(?:[eE][\\+\\-]?(?:[0-9]+))?$"
     }
 
-    public var isNumber: Bool {
-        return (!self.isEmpty && self.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil)
+    public var isInteger: Bool {
+        return (self =~ NumericRegex.integer)
+    }
+
+    public var isPositiveInteger: Bool {
+        return (self =~ NumericRegex.positiveInteger)
+    }
+
+    public var isNegativeInteger: Bool {
+        return (self =~ NumericRegex.negativeInteger)
+    }
+
+    public var isDecimal: Bool {
+        return (self =~ NumericRegex.decimal)
+    }
+
+    public var isPositiveDecimal: Bool {
+        return (self =~ NumericRegex.positiveDecimal)
+    }
+
+    public var isNegativeDecimal: Bool {
+        return (self =~ NumericRegex.negativeDecimal)
+    }
+
+    public var isFloatingPoint: Bool {
+        return (self != "." && self =~ NumericRegex.floatingPoint)
+    }
+
+    public var isPositiveFloatingPoint: Bool {
+        return (self != "." && self =~ NumericRegex.positiveFloatingPoint)
+    }
+
+    public var isNegativeFloatingPoint: Bool {
+        return (self != "." && self =~ NumericRegex.negativeFloatingPoint)
     }
 }

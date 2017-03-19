@@ -42,9 +42,11 @@ public struct Queue<T>: SequentialCollection {
     }
 
     public mutating func pop() -> T? {
-        guard head < elements.count, let element = elements[head] else {
+        guard (head < elements.count) else {
             return nil
         }
+
+        let element = elements[head]
 
         elements[head] = nil
         head += 1

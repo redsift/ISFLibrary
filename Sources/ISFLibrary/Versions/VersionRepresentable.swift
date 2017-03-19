@@ -28,7 +28,7 @@ extension VersionRepresentable {
     internal func getVersion(from string: String) -> Array<UInt>? {
         let version = string.components(separatedBy: CharacterSet(charactersIn: "."))
 
-        guard (version.count == 3 && version[0].isNumber && version[1].isNumber && version[2].isNumber) else {
+        guard (version.count == 3 && version[0].isPositiveInteger && version[1].isPositiveInteger && version[2].isPositiveInteger) else {
             return nil
         }
 
