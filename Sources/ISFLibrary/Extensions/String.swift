@@ -24,7 +24,7 @@ import Foundation
 
 public extension String {
     private struct NumericRegex {
-        static let integer               = "^[\\-\\+]?[0-9]+$"
+        static let integer               = "^[-+]?[0-9]+$"
         static let positiveInteger       = "^[+]?[0-9]+$"
         static let negativeInteger       = "^[-][0-9]+$"
         static let decimal               = "^[-+]?([0-9]+|\\.[0-9]+|[0-9]+\\.[0-9]+)$"

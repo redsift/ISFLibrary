@@ -69,7 +69,8 @@ class StringTests: XCTestCase {
             ".1",
             "0.1",
             "+0.1",
-            "-0.1"
+            "-0.1",
+            "~0.1"
         ]
 
         for string in integers {
@@ -110,7 +111,8 @@ class StringTests: XCTestCase {
             "-0.1",
             "-0",
             "-1",
-            "-01"
+            "-01",
+            "~1"
         ]
 
         for string in integers {
@@ -145,7 +147,8 @@ class StringTests: XCTestCase {
             "-0.1",
             "+0",
             "+1",
-            "+01"
+            "+01",
+            "~1"
         ]
 
         for string in integers {
@@ -213,7 +216,8 @@ class StringTests: XCTestCase {
             "0.1a",
             "a",
             "one",
-            "one.one"
+            "one.one",
+            "~123.123"
         ]
 
         for string in decimals {
@@ -273,7 +277,9 @@ class StringTests: XCTestCase {
             "-00123.123",
             "one",
             "+one",
-            "-one"
+            "-one",
+            "~0",
+            "~123.123"
         ]
 
         for string in decimals {

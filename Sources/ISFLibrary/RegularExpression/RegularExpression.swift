@@ -22,8 +22,6 @@
 
 import Foundation
 
-public var regexOptions: RegularExpression.Options = []
-
 public func makeRegex(with pattern: String, options: RegularExpression.Options = []) throws -> RegularExpression {
     return try RegularExpression(pattern: pattern, options: options)
 }
@@ -38,9 +36,7 @@ public extension String {
     }
 
     public func match(with pattern: String, options: RegularExpression.Options = []) throws -> Int {
-        let regex = try makeRegex(with: pattern, options: options)
-
-        return regex.numberOfMatches(in: self, options: [], range: NSRange(location: 0, length: self.characters.count))
+        return try self.match(with: makeRegex(with: pattern, options: options))
     }
 
     public func match(with pattern: String, options: RegularExpression.Options = []) throws -> Bool {
@@ -49,6 +45,7 @@ public extension String {
 }
 
 infix operator =~: ComparisonPrecedence
+infix operator !~: ComparisonPrecedence
 
 @inline(__always)
 public func =~(lhs: String, pattern: RegularExpression) -> Bool {
@@ -56,15 +53,37 @@ public func =~(lhs: String, pattern: RegularExpression) -> Bool {
 }
 
 @inline(__always)
+public func !~(lhs: String, pattern: RegularExpression) -> Bool {
+    return (lhs.isEmpty || !lhs.match(with: pattern))
+}
+
+@inline(__always)
 public func =~(lhs: String, pattern: String) -> Bool {
     if let result = wrapper(do: {
-                                return try (!lhs.isEmpty && lhs.match(with: pattern, options: regexOptions))
+                                return try (!lhs.isEmpty && lhs.match(with: pattern))
                             },
                             catch: { failure in
                                 logger(failure)
                             },
                             capture: {
-                                return [lhs, "~=", pattern, regexOptions]
+                                return [lhs, "~=", pattern]
+                            }) {
+        return result
+    }
+
+    return false
+}
+
+@inline(__always)
+public func !~(lhs: String, pattern: String) -> Bool {
+    if let result = wrapper(do: {
+                                return try (lhs.isEmpty || !lhs.match(with: pattern))
+                            },
+                            catch: { failure in
+                                logger(failure)
+                            },
+                            capture: {
+                                return [lhs, "~=", pattern]
                             }) {
         return result
     }
