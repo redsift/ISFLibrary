@@ -54,7 +54,7 @@ public func =~(lhs: String, pattern: RegularExpression) -> Bool {
 
 @inline(__always)
 public func !~(lhs: String, pattern: RegularExpression) -> Bool {
-    return (lhs.isEmpty || !lhs.match(with: pattern))
+    return !(lhs =~ pattern)
 }
 
 @inline(__always)
@@ -63,10 +63,10 @@ public func =~(lhs: String, pattern: String) -> Bool {
                                 return try (!lhs.isEmpty && lhs.match(with: pattern))
                             },
                             catch: { failure in
-                                logger(failure)
+                                errorLogger(failure)
                             },
                             capture: {
-                                return [lhs, "~=", pattern]
+                                return [lhs, pattern]
                             }) {
         return result
     }
@@ -76,17 +76,5 @@ public func =~(lhs: String, pattern: String) -> Bool {
 
 @inline(__always)
 public func !~(lhs: String, pattern: String) -> Bool {
-    if let result = wrapper(do: {
-                                return try (lhs.isEmpty || !lhs.match(with: pattern))
-                            },
-                            catch: { failure in
-                                logger(failure)
-                            },
-                            capture: {
-                                return [lhs, "~=", pattern]
-                            }) {
-        return result
-    }
-
-    return false
+    return !(lhs =~ pattern)
 }

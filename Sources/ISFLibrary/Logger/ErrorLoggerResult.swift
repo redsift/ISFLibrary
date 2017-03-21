@@ -1,5 +1,5 @@
 /*
-    LoggerResults.swift
+    ErrorLoggerResult.swift
 
     Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
@@ -20,20 +20,20 @@
     IN THE SOFTWARE.
 */
 
-public struct LoggerResults {
+public struct ErrorLoggerResult {
     public let error: Error
     public let file: String
     public let line: Int
     public let column: Int
     public let function: String
-    public let objects: Array<Any>?
+    public let objects: Array<Any>
 
     public init(error:    Error,
                 file:     String = #file,
                 line:     Int = #line,
                 column:   Int = #column,
                 function: String = #function,
-                objects:  Array<Any>? = nil) {
+                objects:  Array<Any> = []) {
         self.error = error
         self.file = file
         self.line = line
@@ -43,18 +43,18 @@ public struct LoggerResults {
     }
 }
 
-extension LoggerResults: CustomStringConvertible {
+extension ErrorLoggerResult: CustomStringConvertible {
     public var description: String {
         var description = "error: \(error), file: \(file), line: \(line), column: \(column), function: \(function)"
 
-        if (objects != nil) {
+        if (objects.count > 0) {
             description += ", objects: ("
 
             var loopCount = 0
 
-            for object in objects! {
+            for object in objects {
                 if (loopCount > 0) {
-                    description += ","
+                    description += ", "
                 }
 
                 description += " [\(object)]"
