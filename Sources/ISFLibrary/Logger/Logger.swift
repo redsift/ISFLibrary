@@ -22,12 +22,12 @@
 
 /// 'do' 'catch' wrapper too catch thrown errors, mainly used to catch in
 /// unthrowable code such as 'defer' and async code.
-public func wrapper<T>(file:         String = #file,
+public func wrapper<T>(do closure:   @escaping () throws -> T,
+                       catch failed: @escaping (ErrorLoggerResult) -> Void = errorLogger,
+                       file:         String = #file,
                        line:         Int = #line,
                        column:       Int = #column,
                        function:     String = #function,
-                       do closure:   @escaping () throws -> T,
-                       catch failed: @escaping (ErrorLoggerResult) -> Void = errorLogger,
                        capture:      @escaping () -> Array<Any> = { return [] }) -> T? {
     do {
         return try closure()
@@ -44,13 +44,13 @@ public func wrapper<T>(file:         String = #file,
 }
 
 /// log a message at a given level by calling the 'logger' closure.
-public func logger(level:    LoggerLevel,
-                   message:  String,
-                   file:     String = #file,
-                   line:     Int = #line,
-                   column:   Int = #column,
-                   function: String = #function,
-                   objects:  Array<Any> = []) {
+public func logger(level:     LoggerLevel,
+                   _ message: String,
+                   file:      String = #file,
+                   line:      Int = #line,
+                   column:    Int = #column,
+                   function:  String = #function,
+                   objects:   Array<Any> = []) {
     logger(LoggerResult(level:    level,
                         message:  message,
                         file:     file,
@@ -79,19 +79,19 @@ public func logger(error:    Error,
 /// can be overidden to plugin your own code to deal with errors by default chains
 /// down to the 'logger' closure to deal with the logging of the error.
 public var errorLogger: (ErrorLoggerResult) -> Void = { failure in
-    print("errorLogger: \(failure.description)", to: &errorStream)
+    print("errorLogger ~ \(failure.description)", to: &errorStream)
 
-    logger(LoggerResult(level:    .Error,
-                        message:  "\(failure.error)",
-                        file:     failure.file,
-                        line:     failure.line,
-                        column:   failure.column,
-                        function: failure.function,
-                        objects:  failure.objects))
+    logger(level:    .Error,
+                     "\(failure.error)",
+           file:     failure.file,
+           line:     failure.line,
+           column:   failure.column,
+           function: failure.function,
+           objects:  failure.objects)
 }
 
 /// default closure to log errors and and messages, can be overidden to plugin your
 /// own code or favorite logging package.
 public var logger: (LoggerResult) -> Void = { log in
-    print("logger: \(log.description)", to: &outputStream)
+    print("logger ~ \(log.description)", to: &outputStream)
 }
