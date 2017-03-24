@@ -1,7 +1,7 @@
 /*
-    XCTestManifests.swift
+    Weak.swift
 
-    Copyright (c) 2016, 2017 Stephen Whittle  All rights reserved.
+    Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"),
@@ -20,19 +20,26 @@
     IN THE SOFTWARE.
 */
 
-import Foundation
-import XCTest
+/// A wrapper around a type (usually a class type) so it can be weakly referenced
+/// from an Array or other strong container.
+public struct Weak<T: AnyObject> {
+    public weak var value: T?
 
-#if !os(OSX)
-public let allTests = [
-    testCase(StringTests.allTests),
-    testCase(TimeIntervalTests.allTests),
-    testCase(QueueTests.allTests),
-    testCase(StackTests.allTests),
-    testCase(TreeNodeTests.allTests),
-    testCase(ABIVersionTests.allTests),
-    testCase(SemanticVersionTests.allTests),
-    testCase(ResultTests.allTests),
-    testCase(WrappersTests.allTests)
-]
-#endif
+    public init(_ value: T?) {
+        self.value = value
+    }
+
+    public func contains(_ other: T) -> Bool {
+        if let type = value {
+            return (type === other)
+        }
+
+        return false
+    }
+}
+
+extension Weak: CustomStringConvertible {
+    public var description: String {
+        return "\(value)"
+    }
+}

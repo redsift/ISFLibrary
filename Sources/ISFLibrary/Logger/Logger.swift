@@ -33,11 +33,11 @@ public func wrapper<T>(do closure:   @escaping () throws -> T,
         return try closure()
     } catch {
         failed(ErrorLoggerResult(error:    error,
+                                 objects:  capture(),
                                  file:     file,
                                  line:     line,
                                  column:   column,
-                                 function: function,
-                                 objects:  capture()))
+                                 function: function))
 
         return nil
     }
@@ -46,33 +46,33 @@ public func wrapper<T>(do closure:   @escaping () throws -> T,
 /// log a message at a given level by calling the 'logger' closure.
 public func logger(level:     LoggerLevel,
                    _ message: String,
+                   objects:   Array<Any> = [],
                    file:      String = #file,
                    line:      Int = #line,
                    column:    Int = #column,
-                   function:  String = #function,
-                   objects:   Array<Any> = []) {
+                   function:  String = #function) {
     logger(LoggerResult(level:    level,
                         message:  message,
+                        objects:  objects,
                         file:     file,
                         line:     line,
                         column:   column,
-                        function: function,
-                        objects:  objects))
+                        function: function))
 }
 
 /// log an error by calling the 'errorLogger' closure.
 public func logger(error:    Error,
+                   objects:  Array<Any> = [],
                    file:     String = #file,
                    line:     Int = #line,
                    column:   Int = #column,
-                   function: String = #function,
-                   objects:  Array<Any> = []) {
+                   function: String = #function) {
     errorLogger(ErrorLoggerResult(error:    error,
+                                  objects:  objects,
                                   file:     file,
                                   line:     line,
                                   column:   column,
-                                  function: function,
-                                  objects:  objects))
+                                  function: function))
 }
 
 /// default closure to intercept thrown errors such as from the do catch wrapper,
@@ -83,11 +83,11 @@ public var errorLogger: (ErrorLoggerResult) -> Void = { failure in
 
     logger(level:    .Error,
                      "\(failure.error)",
+           objects:  failure.objects,
            file:     failure.file,
            line:     failure.line,
            column:   failure.column,
-           function: failure.function,
-           objects:  failure.objects)
+           function: failure.function)
 }
 
 /// default closure to log errors and and messages, can be overidden to plugin your

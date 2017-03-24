@@ -21,34 +21,34 @@
 */
 
 public struct LoggerResult {
-    public let message: String
-    public let level: LoggerLevel
-    public let file: String
-    public let line: Int
-    public let column: Int
+    public let level:    LoggerLevel
+    public let message:  String
+    public let objects:  Array<Any>
+    public let file:     String
+    public let line:     Int
+    public let column:   Int
     public let function: String
-    public let objects: Array<Any>
 
     public init(level:    LoggerLevel,
                 message:  String,
+                objects:  Array<Any> = [],
                 file:     String = #file,
                 line:     Int = #line,
                 column:   Int = #column,
-                function: String = #function,
-                objects:  Array<Any> = []) {
-        self.message = message
+                function: String = #function) {
         self.level = level
+        self.message = message
+        self.objects = objects
         self.file = file
         self.line = line
         self.column = column
         self.function = function
-        self.objects = objects
     }
 }
 
 extension LoggerResult: CustomStringConvertible {
     public var description: String {
-        var description = "message: \(message), level: \(level), file: \(file), line: \(line), column: \(column), function: \(function)"
+        var description = "level: \(level), message: \(message)"
 
         if (objects.count > 0) {
             description += ", objects: ("
@@ -67,6 +67,8 @@ extension LoggerResult: CustomStringConvertible {
 
             description += ")"
         }
+
+        description += ", file: \(file), line: \(line), column: \(column), function: \(function)"
 
         return description
     }

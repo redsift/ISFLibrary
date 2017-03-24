@@ -21,31 +21,31 @@
 */
 
 public struct ErrorLoggerResult {
-    public let error: Error
-    public let file: String
-    public let line: Int
-    public let column: Int
+    public let error:    Error
+    public let objects:  Array<Any>
+    public let file:     String
+    public let line:     Int
+    public let column:   Int
     public let function: String
-    public let objects: Array<Any>
 
     public init(error:    Error,
+                objects:  Array<Any> = [],
                 file:     String = #file,
                 line:     Int = #line,
                 column:   Int = #column,
-                function: String = #function,
-                objects:  Array<Any> = []) {
+                function: String = #function) {
         self.error = error
+        self.objects = objects
         self.file = file
         self.line = line
         self.column = column
         self.function = function
-        self.objects = objects
     }
 }
 
 extension ErrorLoggerResult: CustomStringConvertible {
     public var description: String {
-        var description = "error: \(error), file: \(file), line: \(line), column: \(column), function: \(function)"
+        var description = "error: \(error)"
 
         if (objects.count > 0) {
             description += ", objects: ("
@@ -64,6 +64,8 @@ extension ErrorLoggerResult: CustomStringConvertible {
 
             description += ")"
         }
+
+        description += ", file: \(file), line: \(line), column: \(column), function: \(function)"
 
         return description
     }

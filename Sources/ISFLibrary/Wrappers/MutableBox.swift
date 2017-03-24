@@ -1,7 +1,7 @@
 /*
-    XCTestManifests.swift
+    MutableBox.swift
 
-    Copyright (c) 2016, 2017 Stephen Whittle  All rights reserved.
+    Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"),
@@ -20,19 +20,19 @@
     IN THE SOFTWARE.
 */
 
-import Foundation
-import XCTest
+/// A class wrapper around a type (usually a value type) so changes to it can be
+/// shared (usually as an ad hoc communication channel).
+/// NOTE: this version is *not* threadsafe, use AtomicBox for that.
+public class MutableBox<T> {
+    public var value: T
 
-#if !os(OSX)
-public let allTests = [
-    testCase(StringTests.allTests),
-    testCase(TimeIntervalTests.allTests),
-    testCase(QueueTests.allTests),
-    testCase(StackTests.allTests),
-    testCase(TreeNodeTests.allTests),
-    testCase(ABIVersionTests.allTests),
-    testCase(SemanticVersionTests.allTests),
-    testCase(ResultTests.allTests),
-    testCase(WrappersTests.allTests)
-]
-#endif
+    public init(_ value: T) {
+        self.value = value
+    }
+}
+
+extension MutableBox: CustomStringConvertible {
+    public var description: String {
+        return "\(value)"
+    }
+}
