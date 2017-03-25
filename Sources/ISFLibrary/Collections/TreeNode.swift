@@ -26,6 +26,10 @@ public class TreeNode<T> {
     public weak var parent: TreeNode?
     public var children = Array<TreeNode<T>>()
 
+    public init(value: T) {
+        self.value = value
+    }
+
     public var isRoot: Bool {
         return (parent == nil) ? true : false
     }
@@ -36,10 +40,6 @@ public class TreeNode<T> {
 
     public var isNode: Bool {
         return (!isRoot && !isLeaf)
-    }
-
-    public init(value: T) {
-        self.value = value
     }
 
     public func addChild(node: TreeNode<T>) {

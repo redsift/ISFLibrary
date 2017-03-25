@@ -150,7 +150,7 @@ extension LinkedList {
 }
 
 extension LinkedList {
-    func copy() -> LinkedList<T> {
+    public func copy() -> LinkedList<T> {
         let newLinkedList = LinkedList<T>()
 
         for element in self {
