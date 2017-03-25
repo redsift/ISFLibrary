@@ -25,10 +25,20 @@ public enum Result<T> {
     case Success(T)       // Success wraps a T value
     case Failure(Error)   // Failure wraps an Error
 
+    /// Constructs a success wrapping a `value`.
+    public init(_ value: T) {
+        self = .Success(value)
+    }
+
+    /// Constructs a failure wrapping an `error`.
+    public init(_ error: Error) {
+        self = .Failure(error)
+    }
+
     /// Construct a result from a `throws` function
     public init(_ capturing: () throws -> T) {
         do {
-            self = .Success(try capturing())
+            self = try .Success(capturing())
         } catch {
             self = .Failure(error)
         }

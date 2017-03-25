@@ -22,7 +22,7 @@
 
 /// A class wrapper around a type (usually a value type) so changes to it can be
 /// shared (usually as an ad hoc communication channel).
-/// NOTE: this version is *not* threadsafe, use AtomicBox for that.
+/// NOTE: this version is *not* threadsafe, use Atomic.Atomic() for that.
 public class MutableBox<T> {
     public var value: T
 
