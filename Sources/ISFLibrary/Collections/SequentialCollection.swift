@@ -26,6 +26,8 @@ public protocol SequentialCollection: Sequence {
     var isEmpty: Bool { get }
     var count: Int { get }
 
+    init()
+
     mutating func push(_ element: T)
     mutating func pop() -> T?
     func peek() -> T?

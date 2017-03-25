@@ -20,59 +20,55 @@
     IN THE SOFTWARE.
 */
 
-public struct LinkedListCOW<T: Equatable> {
+public struct LinkedListCOW<T: Equatable>: LinkedListType {
     public typealias NodeType = Node<T>
 
-    fileprivate var storage: LinkedList<T>
-    private var mutableStorage: LinkedList<T> {
+    fileprivate var _storage: LinkedList<T>
+    private var _mutableStorage: LinkedList<T> {
         mutating get {
-            if (!isKnownUniquelyReferenced(&storage)) {
-                storage = storage.copy()
+            if (!isKnownUniquelyReferenced(&_storage)) {
+                _storage = _storage.copy()
             }
 
-            return storage
+            return _storage
         }
     }
 
     public init() {
-        storage = LinkedList()
+        _storage = LinkedList()
     }
 
     public init<S: Sequence>(_ elements: S) where S.Iterator.Element == T {
-        storage = LinkedList(elements)
+        _storage = LinkedList(elements)
     }
 
     public var count: Int {
-        return storage.count
-    }
-
-    public var isEmpty: Bool {
-        return storage.isEmpty
+        return _storage.count
     }
 
     public mutating func append(value: T) {
-        mutableStorage.append(value: value)
+        _mutableStorage.append(value: value)
     }
 
-    public func nodeAt(index: Int) -> NodeType {
-        return storage.nodeAt(index: index)
+    public func nodeAt(index: Int) throws -> NodeType {
+        return try _storage.nodeAt(index: index)
     }
 
-    public func valueAt(index: Int) -> T {
-        return nodeAt(index: index).value
+    public func valueAt(index: Int) throws -> T {
+        return try nodeAt(index: index).value
     }
 
-    public mutating func remove(node: NodeType) {
-        mutableStorage.remove(node: node)
+    public mutating func remove(node: NodeType) throws {
+        try _mutableStorage.remove(node: node)
     }
 
-    public mutating func remove(atIndex index: Int) {
-        mutableStorage.remove(atIndex: index)
+    public mutating func remove(atIndex index: Int) throws {
+        try _mutableStorage.remove(atIndex: index)
     }
 }
 
 extension LinkedListCOW: CustomStringConvertible {
     public var description: String {
-        return "LinkedListCOW(storage: \(storage))"
+        return "LinkedListCOW(storage: \(_storage))"
     }
 }

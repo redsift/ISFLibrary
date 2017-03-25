@@ -24,15 +24,15 @@ public struct LinkedListIterator<T: Equatable>: IteratorProtocol {
     public typealias Element = Node<T>
 
     /// the current node in the iteration
-    private var currentNode: Element?
+    private var _currentNode: Element?
 
     public init(startNode: Element?) {
-        currentNode = startNode
+        _currentNode = startNode
     }
 
     public mutating func next() -> LinkedListIterator.Element? {
-        let node = currentNode
-        currentNode = currentNode?.next
+        let node = _currentNode
+        _currentNode = _currentNode?.next
 
         return node
     }

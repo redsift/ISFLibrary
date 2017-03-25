@@ -1,7 +1,7 @@
 /*
-    Stack.swift
+    LinkedListType.swift
 
-    Copyright (c) 2016, 2017 Stephen Whittle  All rights reserved.
+    Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"),
@@ -20,30 +20,25 @@
     IN THE SOFTWARE.
 */
 
-/*
-    Last-in first-out stack (LIFO)
+public protocol LinkedListType {
+    associatedtype T: Equatable
+    associatedtype NodeType
 
-    push() and pop() are O(1) operations.
-*/
+    init()
 
-public struct Stack<T>: SequentialCollection {
-    private var _elements = Array<T>()
+    init<S: Sequence>(_ elements: S) where S.Iterator.Element == T
 
-    public init() { }
+    var count: Int { get }
 
-    public var count: Int {
-        return _elements.count
-    }
+    mutating func append(value: T)
+    func nodeAt(index: Int) throws -> NodeType
+    func valueAt(index: Int) throws -> T
+    mutating func remove(node: NodeType) throws
+    mutating func remove(atIndex index: Int) throws
+}
 
-    public mutating func push(_ element: T) {
-        _elements.append(element)
-    }
-
-    public mutating func pop() -> T? {
-        return _elements.popLast()
-    }
-
-    public func peek() -> T? {
-        return _elements.last
+extension LinkedListType {
+    public var isEmpty: Bool {
+        return (count == 0)
     }
 }

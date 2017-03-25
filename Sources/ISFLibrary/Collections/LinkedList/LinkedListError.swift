@@ -1,7 +1,7 @@
 /*
-    Stack.swift
+    LinkedListError.swift
 
-    Copyright (c) 2016, 2017 Stephen Whittle  All rights reserved.
+    Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"),
@@ -20,30 +20,18 @@
     IN THE SOFTWARE.
 */
 
-/*
-    Last-in first-out stack (LIFO)
+public enum LinkedListError: Error {
+    case Index(index: Int)
+    case Invariant
+}
 
-    push() and pop() are O(1) operations.
-*/
-
-public struct Stack<T>: SequentialCollection {
-    private var _elements = Array<T>()
-
-    public init() { }
-
-    public var count: Int {
-        return _elements.count
-    }
-
-    public mutating func push(_ element: T) {
-        _elements.append(element)
-    }
-
-    public mutating func pop() -> T? {
-        return _elements.popLast()
-    }
-
-    public func peek() -> T? {
-        return _elements.last
+extension LinkedListError: CustomStringConvertible {
+    public var description: String {
+        switch self {
+            case .Index(let index):
+                return "Index \(index) out of bounds"
+            case .Invariant:
+                return "Internal invariant not upheld"
+        }
     }
 }

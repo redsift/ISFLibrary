@@ -20,23 +20,23 @@
     IN THE SOFTWARE.
 */
 
-public final class LinkedList<T: Equatable> {
+public final class LinkedList<T: Equatable>: LinkedListType {
     public typealias NodeType = Node<T>
 
-    fileprivate var start: NodeType? {
+    fileprivate var _start: NodeType? {
         didSet {
             // special case for a 1 element list
-            if (end == nil) {
-                end = start
+            if (_end == nil) {
+                _end = _start
             }
         }
     }
 
-    fileprivate var end: NodeType? {
+    fileprivate var _end: NodeType? {
         didSet {
             // special case for a 1 element list
-            if (start == nil) {
-                start = end
+            if (_start == nil) {
+                _start = _end
             }
         }
     }
@@ -56,20 +56,13 @@ public final class LinkedList<T: Equatable> {
 }
 
 extension LinkedList {
-    /// wether or not the list is empty
-    public var isEmpty: Bool {
-        return (count == 0)
-    }
-}
-
-extension LinkedList {
     public func append(value: T) {
-        let previousEnd = end
+        let previousEnd = _end
 
-        end = NodeType(value: value)
+        _end = NodeType(value: value)
 
-        end?.previous = previousEnd
-        previousEnd?.next = end
+        _end?.previous = previousEnd
+        previousEnd?.next = _end
 
         count += 1
     }
@@ -77,7 +70,7 @@ extension LinkedList {
 
 extension LinkedList {
     fileprivate func iterate(_ closure: (NodeType, Int) throws -> NodeType?) rethrows -> NodeType? {
-        var node = start
+        var node = _start
         var index = 0
 
         while (node != nil) {
@@ -96,37 +89,37 @@ extension LinkedList {
 }
 
 extension LinkedList {
-    public func nodeAt(index: Int) -> NodeType {
-        precondition(index >= 0 && index < count, "Index \(index) out of bounds")
+    public func nodeAt(index: Int) throws -> NodeType {
+        guard (index >= 0 && index < count) else {
+            throw LinkedListError.Index(index: index)
+        }
 
-        let result = iterate {
+        return iterate {
             if ($1 == index) {
                 return $0
             }
 
             return nil
-        }
-
-        return result!
+        }!
     }
 
-    public func valueAt(index: Int) -> T {
-        return nodeAt(index: index).value
+    public func valueAt(index: Int) throws -> T {
+        return try nodeAt(index: index).value
     }
 }
 
 extension LinkedList {
-    public func remove(node: NodeType) {
+    public func remove(node: NodeType) throws {
         let nextNode = node.next
         let previousNode = node.previous
 
-        if (node === start && node === end) {
-            start = nil
-            end = nil
-        } else if (node === start) {
-            start = node.next
-        } else if (node === end) {
-            end = node.previous
+        if (node === _start && node === _end) {
+            _start = nil
+            _end = nil
+        } else if (node === _start) {
+            _start = node.next
+        } else if (node === _end) {
+            _end = node.previous
         } else {
             previousNode?.next = nextNode
             nextNode?.previous = previousNode
@@ -134,11 +127,15 @@ extension LinkedList {
 
         count -= 1
 
-        assert((end != nil && start != nil && count > 1) || (end == nil && start == nil && count == 0), "Internal invariant not upheld at the end of remove")
+        guard ((_end != nil && _start != nil && count > 1) || (_end == nil && _start == nil && count == 0)) else {
+            throw LinkedListError.Invariant
+        }
     }
 
-    public func remove(atIndex index: Int) {
-        precondition(index >= 0 && index < count, "Index \(index) out of bounds")
+    public func remove(atIndex index: Int) throws {
+        guard (index >= 0 && index < count) else {
+            throw LinkedListError.Index(index: index)
+        }
 
         let result = iterate {
             if ($1 == index) {
@@ -148,15 +145,7 @@ extension LinkedList {
             return nil
         }
 
-        remove(node: result!)
-    }
-}
-
-extension LinkedList: Sequence {
-    public typealias Iterator = LinkedListIterator<T>
-
-    public func makeIterator() -> LinkedList.Iterator {
-        return LinkedListIterator(startNode: self.start)
+        try remove(node: result!)
     }
 }
 
@@ -169,5 +158,13 @@ extension LinkedList {
         }
 
         return newLinkedList
+    }
+}
+
+extension LinkedList: Sequence {
+    public typealias Iterator = LinkedListIterator<T>
+
+    public func makeIterator() -> LinkedList.Iterator {
+        return LinkedListIterator(startNode: self._start)
     }
 }

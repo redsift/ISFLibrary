@@ -30,38 +30,40 @@
 */
 
 public struct Queue<T>: SequentialCollection {
-    private var elements = Array<T?>()
-    private var head = 0
+    private var _elements = Array<T?>()
+    private var _head = 0
+
+    public init() { }
 
     public var count: Int {
-        return elements.count - head
+        return _elements.count - _head
     }
 
     public mutating func push(_ element: T) {
-        elements.append(element)
+        _elements.append(element)
     }
 
     public mutating func pop() -> T? {
-        guard (head < elements.count) else {
+        guard (_head < _elements.count) else {
             return nil
         }
 
-        let element = elements[head]
+        let element = _elements[_head]
 
-        elements[head] = nil
-        head += 1
+        _elements[_head] = nil
+        _head += 1
 
-        let percentage = Double(head) / Double(elements.count)
+        let percentage = Double(_head) / Double(_elements.count)
 
-        if (elements.count > 50 && percentage > 0.25) {
-            elements.removeFirst(head)
-            head = 0
+        if (_elements.count > 50 && percentage > 0.25) {
+            _elements.removeFirst(_head)
+            _head = 0
         }
 
         return element
     }
 
     public func peek() -> T? {
-        return (isEmpty) ? nil : elements[head]
+        return (isEmpty) ? nil : _elements[_head]
     }
 }
