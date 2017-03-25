@@ -21,13 +21,18 @@
 */
 
 public class TreeNode<T> {
-    public var value: T
+    private var _value: T?
+    public var value: T {
+        return _value!
+    }
 
-    public weak var parent: TreeNode?
-    public var children = Array<TreeNode<T>>()
+    public private(set) weak var parent: TreeNode?
+    public private(set) var children = Array<TreeNode<T>>()
+
+    public init() { }
 
     public init(value: T) {
-        self.value = value
+        self._value = value
     }
 
     public var isRoot: Bool {
