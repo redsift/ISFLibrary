@@ -25,6 +25,8 @@
 public struct MultiMap<Key: Hashable, Value: Equatable> {
     /// Internal dictionary holding the elements.
     fileprivate var _dictionary = Dictionary<Key, Array<Value>>()
+    /// Number of key-value pairs stored in the multimap.
+    public fileprivate(set) var count = 0
 
     /// Constructs an empty multimap.
     public init() { }
@@ -35,10 +37,21 @@ public struct MultiMap<Key: Hashable, Value: Equatable> {
             insertValue(value, forKey: key)
         }
     }
+}
 
-    /// Number of key-value pairs stored in the multimap.
-    public fileprivate(set) var count = 0
+extension MultiMap: ExpressibleByDictionaryLiteral {
+    /// Constructs a multiset using a dictionary literal.
+    /// Unlike a set, multiple copies of an element are inserted.
+    public init(dictionaryLiteral elements: (Key, Value)...) {
+        self.init()
 
+        for (key, value) in elements {
+            insertValue(value, forKey: key)
+        }
+    }
+}
+
+extension MultiMap {
     /// Number of distinct keys stored in the multimap.
     public var keyCount: Int {
         return _dictionary.count
@@ -176,18 +189,6 @@ extension MultiMap: Sequence {
             }
 
             return nil
-        }
-    }
-}
-
-extension MultiMap: ExpressibleByDictionaryLiteral {
-    /// Constructs a multiset using a dictionary literal.
-    /// Unlike a set, multiple copies of an element are inserted.
-    public init(dictionaryLiteral elements: (Key, Value)...) {
-        self.init()
-
-        for (key, value) in elements {
-            insertValue(value, forKey: key)
         }
     }
 }

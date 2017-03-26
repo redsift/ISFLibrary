@@ -45,6 +45,8 @@ extension MultiSet: ExpressibleByArrayLiteral {
     /// Constructs a multiset using an array literal.
     /// Unlike a set, multiple copies of an element are inserted.
     public init(arrayLiteral elements: T...) {
+        precondition(elements.count >= 1, "Invalid number of occurrences")
+
         try! self.init(elements)
     }
 }
