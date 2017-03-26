@@ -20,8 +20,8 @@
     IN THE SOFTWARE.
 */
 
-import Foundation
 import XCTest
+
 @testable import ISFLibrary
 
 class QueueTests: XCTestCase {

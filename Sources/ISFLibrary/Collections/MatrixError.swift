@@ -1,5 +1,5 @@
 /*
-    swap.swift
+    MatrixError.swift
 
     Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
@@ -20,10 +20,30 @@
     IN THE SOFTWARE.
 */
 
-/// swap two values
-public func swap<T>(_ lhs: inout T, _ rhs: inout T) {
-    let temp = lhs
+public enum MatrixError: Error {
+    case Rows(rows: Int)
+    case Columns(columns: Int)
+    case Grid(rows: Int, columns: Int, gridCount: Int)
+    case EmptyMatrix
+    case NoMatrixColumns
+    case DifferentMatrixColumns
+}
 
-    lhs = rhs
-    rhs = temp
+extension MatrixError: CustomStringConvertible {
+    public var description: String {
+        switch self {
+            case .Rows(let rows):
+                return "Invalid number of rows (\(rows))"
+            case .Columns(let columns):
+                return "Invalid number of columns (\(columns))"
+            case .Grid(let rows, let columns, let gridCount):
+                return "Can't create matrix - grid.count of \(gridCount) must equal rows (\(rows)) * columns (\(columns))"
+            case .EmptyMatrix:
+                return "Can't create an empty matrix"
+            case .NoMatrixColumns:
+                return "Can't create a matrix column with no elements"
+            case .DifferentMatrixColumns:
+                return "Can't create a matrix with different sized columns"
+        }
+    }
 }

@@ -20,8 +20,9 @@
     IN THE SOFTWARE.
 */
 
-import Foundation
 import XCTest
+import Foundation
+
 @testable import ISFLibrary
 
 class TimeIntervalTests: XCTestCase {

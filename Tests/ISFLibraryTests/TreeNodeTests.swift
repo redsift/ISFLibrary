@@ -21,7 +21,6 @@
 */
 
 import XCTest
-import Foundation
 
 @testable import ISFLibrary
 

@@ -1,5 +1,5 @@
 /*
-    Stack.swift
+    MultiSetError.swift
 
     Copyright (c) 2016, 2017 Stephen Whittle  All rights reserved.
 
@@ -20,48 +20,15 @@
     IN THE SOFTWARE.
 */
 
-/*
-    Last-in first-out stack (LIFO)
-
-    push() and pop() are O(1) operations.
-*/
-
-public struct Stack<T>: SequentialCollection {
-    fileprivate var _elements = Array<T>()
-
-    public init() { }
-
-    public var count: Int {
-        return _elements.count
-    }
-
-    public mutating func push(_ element: T) {
-        _elements.append(element)
-    }
-
-    public mutating func pop() -> T? {
-        return _elements.popLast()
-    }
-
-    public func peek() -> T? {
-        return _elements.last
-    }
+public enum MultiSetError: Error {
+    case NumberOfOccurrences
 }
 
-public func ==<T: Equatable>(lhs: Stack<T>, rhs: Stack<T>) -> Bool {
-    if (lhs._elements.count != rhs._elements.count) {
-        return false
-    }
-
-    for index in 0 ..< lhs.count {
-        if (lhs._elements[index] != rhs._elements[index]) {
-            return false
+extension MultiSetError: CustomStringConvertible {
+    public var description: String {
+        switch self {
+            case .NumberOfOccurrences:
+                return "Invalid number of occurrences"
         }
     }
-
-    return true
-}
-
-public func !=<T: Equatable>(lhs: Stack<T>, rhs: Stack<T>) -> Bool {
-    return !(lhs == rhs)
 }

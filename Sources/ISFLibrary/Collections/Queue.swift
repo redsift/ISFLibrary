@@ -30,7 +30,7 @@
 */
 
 public struct Queue<T>: SequentialCollection {
-    private var _elements = Array<T?>()
+    fileprivate var _elements = Array<T?>()
     private var _head = 0
 
     public init() { }
@@ -66,4 +66,22 @@ public struct Queue<T>: SequentialCollection {
     public func peek() -> T? {
         return (isEmpty) ? nil : _elements[_head]
     }
+}
+
+public func ==<T: Equatable>(lhs: Queue<T>, rhs: Queue<T>) -> Bool {
+    if (lhs._elements.count != rhs._elements.count) {
+        return false
+    }
+
+    for index in 0 ..< lhs.count {
+        if (lhs._elements[index] != rhs._elements[index]) {
+            return false
+        }
+    }
+
+    return true
+}
+
+public func !=<T: Equatable>(lhs: Queue<T>, rhs: Queue<T>) -> Bool {
+    return !(lhs == rhs)
 }

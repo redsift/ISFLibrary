@@ -21,6 +21,7 @@
 */
 
 import XCTest
+
 @testable import ISFLibrary
 
 class SemanticVersionTests: XCTestCase {
