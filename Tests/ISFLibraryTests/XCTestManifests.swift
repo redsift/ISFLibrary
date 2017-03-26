@@ -26,13 +26,6 @@ import XCTest
 public let allTests = [
     testCase(StringTests.allTests),
     testCase(TimeIntervalTests.allTests),
-    testCase(QueueTests.allTests),
-    testCase(StackTests.allTests),
-    testCase(TreeNodeTests.allTests),
-    testCase(PriorityQueueTests.allTests),
-    testCase(MatrixTests.allTests),
-    testCase(MultiSetTests.allTests),
-    testCase(MultiMapTests.allTests),
     testCase(ABIVersionTests.allTests),
     testCase(SemanticVersionTests.allTests),
     testCase(ResultTests.allTests),
