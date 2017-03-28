@@ -44,13 +44,13 @@ public func wrapper<T>(do closure:   @escaping () throws -> T,
 }
 
 /// log a message at a given level by calling the 'logger' closure.
-public func logger(level:     LoggerLevel,
-                   _ message: String,
-                   objects:   Array<Any> = [],
-                   file:      String = #file,
-                   line:      Int = #line,
-                   column:    Int = #column,
-                   function:  String = #function) {
+public func log(level:     LoggerLevel,
+                _ message: String,
+                objects:   Array<Any> = [],
+                file:      String = #file,
+                line:      Int = #line,
+                column:    Int = #column,
+                function:  String = #function) {
     logger(LoggerResult(level:    level,
                         message:  message,
                         objects:  objects,
@@ -61,12 +61,12 @@ public func logger(level:     LoggerLevel,
 }
 
 /// log an error by calling the 'errorLogger' closure.
-public func logger(error:    Error,
-                   objects:  Array<Any> = [],
-                   file:     String = #file,
-                   line:     Int = #line,
-                   column:   Int = #column,
-                   function: String = #function) {
+public func log(error:    Error,
+                objects:  Array<Any> = [],
+                file:     String = #file,
+                line:     Int = #line,
+                column:   Int = #column,
+                function: String = #function) {
     errorLogger(ErrorLoggerResult(error:    error,
                                   objects:  objects,
                                   file:     file,
@@ -81,13 +81,13 @@ public func logger(error:    Error,
 public var errorLogger: (ErrorLoggerResult) -> Void = { failure in
     print("errorLogger ~ \(failure.description)", to: &errorStream)
 
-    logger(level:    .Error,
-                     "\(failure.error)",
-           objects:  failure.objects,
-           file:     failure.file,
-           line:     failure.line,
-           column:   failure.column,
-           function: failure.function)
+    log(level:    .Error,
+                  "\(failure.error)",
+        objects:  failure.objects,
+        file:     failure.file,
+        line:     failure.line,
+        column:   failure.column,
+        function: failure.function)
 }
 
 /// default closure to log errors and and messages, can be overidden to plugin your
