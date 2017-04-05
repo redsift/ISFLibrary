@@ -23,7 +23,7 @@
 import XCTest
 import Foundation
 
-@testable import ISFLibrary
+import ISFLibrary
 
 class TimeIntervalTests: XCTestCase {
     override func setUp() {

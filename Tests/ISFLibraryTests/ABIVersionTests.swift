@@ -21,7 +21,8 @@
 */
 
 import XCTest
-@testable import ISFLibrary
+
+import ISFLibrary
 
 class ABIVersionTests: XCTestCase {
     override func setUp() {

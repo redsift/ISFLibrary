@@ -22,7 +22,7 @@
 
 import XCTest
 
-@testable import ISFLibrary
+import ISFLibrary
 
 class StringTests: XCTestCase {
     override func setUp() {

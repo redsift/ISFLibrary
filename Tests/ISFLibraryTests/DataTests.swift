@@ -1,7 +1,7 @@
 /*
-    XCTestManifests.swift
+    StringTests.swift
 
-    Copyright (c) 2016, 2017 Stephen Whittle  All rights reserved.
+    Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"),
@@ -21,15 +21,43 @@
 */
 
 import XCTest
+import Foundation
+
+import ISFLibrary
+
+class DataTests: XCTestCase {
+    override func setUp() {
+        super.setUp()
+        // Put setup code here. This method is called before the invocation of each test method in the class.
+    }
+
+    override func tearDown() {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
+    }
+
+    func testBytes() {
+        var data = Data()
+
+        data.bytes = Array(arrayLiteral: 1, 2, 3)
+
+        XCTAssertEqual(data.bytes, [1, 2, 3], "\(data.bytes) != [1, 2, 3]")
+    }
+
+    func testIsLessThan() {
+        var data1 = Data()
+        var data2 = Data()
+
+        data1.bytes = Array(arrayLiteral: 1, 2, 3)
+        data2.bytes = Array(arrayLiteral: 1, 3, 2)
+
+        XCTAssertLessThan(data1, data2, "\(data1) is not less than \(data2)!!!")
+    }
 
 #if !os(OSX)
-public let allTests = [
-    testCase(DataTests.allTests),
-    testCase(StringTests.allTests),
-    testCase(TimeIntervalTests.allTests),
-    testCase(ABIVersionTests.allTests),
-    testCase(SemanticVersionTests.allTests),
-    testCase(ResultTests.allTests),
-    testCase(WrappersTests.allTests)
-]
+    static let allTests = [
+        ("testBytes", testBytes),
+        ("testIsLessThan", testIsLessThan)
+    ]
 #endif
+}

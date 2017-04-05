@@ -23,7 +23,7 @@
 import XCTest
 import Foundation
 
-@testable import ISFLibrary
+import ISFLibrary
 
 class WrappersTests: XCTestCase {
     override func setUp() {

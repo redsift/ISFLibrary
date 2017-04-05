@@ -34,3 +34,9 @@ public extension Data {
         }
     }
 }
+
+extension Data: Comparable {
+    public static func <(lhs: Data, rhs: Data) -> Bool {
+        return (compare(lhs: lhs.bytes, rhs: rhs.bytes) == .LessThan)
+    }
+}
