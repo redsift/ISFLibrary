@@ -1,7 +1,7 @@
 /*
-    typeToBytes.swift
+    OptionSet.swift
 
-    Copyright (c) 2016, 2017 Stephen Whittle  All rights reserved.
+    Copyright (c) 2017 Stephen Whittle  All rights reserved.
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"),
@@ -20,19 +20,26 @@
     IN THE SOFTWARE.
 */
 
-/// Convert a type to  byte array.
-///
-/// - Parameters:
-///   - value: The value to convert.
-///
-/// - Returns: the result as a byte array.
-public func typeToBytes<T>(_ value: T) -> Array<Byte> {
-    var mutableValue = value
-    let typeSize = MemoryLayout<T>.size
+// See https://stackoverflow.com/questions/32102936/how-do-you-enumerate-optionsettype-in-swift#32103136
+public extension OptionSet where RawValue: Integer {
+    public func elements() -> AnySequence<Self> {
+        var remainingBits = rawValue
+        var bitMask: RawValue = 1
 
-    return withUnsafePointer(to: &mutableValue) {                                 // -> get pointer to value of T
-        $0.withMemoryRebound(to: Byte.self, capacity: typeSize) {                 // -> rebind memory to the target type, which is a byte array
-            Array(UnsafeBufferPointer(start: $0, count: typeSize))                // -> create array with a buffer pointer initialized with the source pointer
-        }                                                                         // -> return the resulted array
+        return AnySequence {
+            return AnyIterator {
+                while (remainingBits != 0) {
+                    defer { bitMask = bitMask &* 2 }
+
+                    if (remainingBits & bitMask != 0) {
+                        remainingBits = remainingBits & ~bitMask
+
+                        return Self(rawValue: bitMask)
+                    }
+                }
+
+                return nil
+            }
+        }
     }
 }
