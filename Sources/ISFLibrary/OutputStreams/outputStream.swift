@@ -35,7 +35,7 @@ public struct StdoutOutputStream: TextOutputStream {
 
             fputs(ascii.joined(separator: ""), stdout)
         } else {
-            fputs(string, stderr)
+            fputs(string, stdout)
         }
     }
 }
