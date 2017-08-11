@@ -22,7 +22,7 @@
 
 import Foundation
 
-#if os(OSX) || os(iOS) || os(watchOS) || os(tvOS)
+#if os(OSX) || os(iOS) || os(watchOS) || os(tvOS) || os(Linux)
 
     public func makeRegex(with pattern: String, options: NSRegularExpression.Options = []) throws -> NSRegularExpression {
         return try NSRegularExpression(pattern: pattern, options: options)
