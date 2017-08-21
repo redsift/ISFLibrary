@@ -21,5 +21,5 @@
 */
 
 public func address(of object: UnsafeRawPointer) -> Int {
-    return unsafeBitCast(object, to: Int.self)
+    return Int(bitPattern: object)
 }
