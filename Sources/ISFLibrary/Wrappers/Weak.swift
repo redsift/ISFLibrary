@@ -40,6 +40,6 @@ public struct Weak<T: AnyObject> {
 
 extension Weak: CustomStringConvertible {
     public var description: String {
-        return "\(value)"
+        return "\(String(describing: value))"
     }
 }
