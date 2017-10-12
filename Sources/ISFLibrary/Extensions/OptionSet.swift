@@ -21,7 +21,7 @@
 */
 
 // See https://stackoverflow.com/questions/32102936/how-do-you-enumerate-optionsettype-in-swift#32103136
-public extension OptionSet where RawValue: Integer {
+public extension OptionSet where RawValue: FixedWidthInteger {
     public func elements() -> AnySequence<Self> {
         var remainingBits = rawValue
         var bitMask: RawValue = 1
